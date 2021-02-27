@@ -193,12 +193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6827cf928743449b91fc2c2427865a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 80
+  _currentHealth: 20
   _anim: {fileID: 2505702599986202162}
-  _spriteRenderer: {fileID: 2505702599986202160}
-  _speed: {fileID: 11400000, guid: 1c7c9306ceceeb14a98dbc24a901632c, type: 2}
-  _woundedValue: {fileID: 11400000, guid: 1c7c9306ceceeb14a98dbc24a901632c, type: 2}
-  _damagedValue: {fileID: 11400000, guid: 1c7c9306ceceeb14a98dbc24a901632c, type: 2}
+  _shipData: {fileID: 11400000, guid: 1c7c9306ceceeb14a98dbc24a901632c, type: 2}
   _healthBar: {fileID: 2505702600124579889}
 --- !u!60 &2505702599986202318
 PolygonCollider2D:

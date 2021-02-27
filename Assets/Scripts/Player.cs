@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private AudioSource _audio;
@@ -22,6 +22,12 @@ public class Player : MonoBehaviour
 
     private float _lastYPosition;
     private Vector3 _offsetDistance;
+
+    [SerializeField] private int _health;
+    public int Health => _health;
+
+    public delegate void DamageAction();
+    public static event DamageAction OnDamage;
 
     private void Start()
     {
@@ -46,7 +52,7 @@ public class Player : MonoBehaviour
     void OnMouseDown()
     {
         _offsetDistance = MousePositionInWorld() - transform.position;
-        StartCoroutine(ContinousShoot());
+        StartCoroutine(ContinousShoot(_bullet));
     }
 
     private Vector3 MousePositionInWorld()
@@ -98,17 +104,17 @@ public class Player : MonoBehaviour
         _lastYPosition = currentPosition;
     }
 
-    private IEnumerator ContinousShoot()
+    private IEnumerator ContinousShoot(GameObject bullet)
     {
         while (Input.GetMouseButton(0))
         {
             _leftMuzzleFlash.SetActive(true);
             _audio.Play();
-            Instantiate(_bullet, _leftSocket.transform.position, Quaternion.identity, _leftSocket.transform);
+            Instantiate(bullet, _leftSocket.transform.position, Quaternion.identity, _leftSocket.transform);
 
             _rightMuzzleFlash.SetActive(true);
             _audio.Play();
-            Instantiate(_bullet, _rightSocket.transform.position, Quaternion.identity, _rightSocket.transform);
+            Instantiate(bullet, _rightSocket.transform.position, Quaternion.identity, _rightSocket.transform);
 
             yield return new WaitForSeconds(0.05f); //to quench fire immediately
 
@@ -123,10 +129,25 @@ public class Player : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            _animator.SetTrigger("Explosion");
-            SoundManager.Instance.PlayerExplosion();
-            Destroy(this.gameObject, 1f);
+            Damage(1);
+            if (_health < 1)
+            {
+                _animator.SetTrigger("Explosion");
+                SoundManager.Instance.PlayerExplosion();
+                Destroy(this.gameObject, 1f);
+            }   
         }
     }
 
+    public void Damage(int amount)
+    {
+        _health -= amount;
+        
+        if (OnDamage != null)
+        {
+            OnDamage();
+        }
+
+        //PlayerHealthBar.ShouldUpdateHealth = true;
+    }
 }

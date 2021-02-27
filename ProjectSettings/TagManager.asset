@@ -7,6 +7,7 @@ TagManager:
   - Walls
   - PlayerShots
   - Enemy
+  - HealthUnit
   layers:
   - Default
   - TransparentFX

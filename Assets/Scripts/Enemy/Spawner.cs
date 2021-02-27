@@ -7,21 +7,23 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject _shipPrefab;
     [SerializeField] private float _seconds;
-    private WaitForSeconds _intervalBetweenShips;
+
     [SerializeField] private Transform[] _positionGrid;
     [SerializeField] private Transform _gridStartPosition;
-    
+
+    private WaitForSeconds _intervalBetweenShips;
+
     private void Start()
     {
         _intervalBetweenShips = new WaitForSeconds(_seconds);
-        StartCoroutine(SpawnProcedure());
+        StartCoroutine(GetShipsInPlace(_shipPrefab));
     }
 
-    IEnumerator SpawnProcedure()
+    IEnumerator GetShipsInPlace(GameObject shipPrefab)
     {
         for (int i = 0; i < _positionGrid.Length; i++)
         {
-            GameObject ship = Instantiate(_shipPrefab, _gridStartPosition.position, Quaternion.Euler(0, 0, 180));
+            GameObject ship = Instantiate(shipPrefab, _gridStartPosition.position, Quaternion.Euler(0, 0, 180));
             
             ship.transform.DOMove(_positionGrid[i].position, 2);
             yield return _intervalBetweenShips; 
@@ -35,7 +37,6 @@ public class Spawner : MonoBehaviour
         {
             ship.isInStartPosition = true;
         }
-
     }
 
 }

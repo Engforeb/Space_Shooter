@@ -5,69 +5,81 @@ using UnityEngine.UI;
 
 public abstract class EnemyShipBehavior : MonoBehaviour, IDamageable
 {
-    public int Health { get ; set; }
-    [SerializeField] private int _currentHealth; 
-    private float _startHealth;
-
-    [SerializeField] private Animator _anim;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    
-    [SerializeField] private EnemyScriptableObject _speed;
-    [SerializeField] private EnemyScriptableObject _woundedValue; 
-    [SerializeField] private EnemyScriptableObject _damagedValue;
-    [SerializeField] private RectTransform _healthBar;
-    private Slider _healthSlider;
     public bool isInStartPosition { get; set; }
+
+    [SerializeField] private int _currentHealth;
+    [SerializeField] private Animator _anim;
+    [SerializeField] private EnemyScriptableObject _shipData;
+    [SerializeField] private RectTransform _healthBar;
+
+    private float _startHealth;
+    private float _speed;
+    private int _woundedValue; 
+    private int _damagedValue;
+    
+    private Slider _healthSlider;
+
+    public delegate void DestroyMe();
+    public static event DestroyMe OnDestroy;
+
+    private bool dead;
 
     private void Start()
     {
+        _speed = _shipData.speed;
+        _woundedValue = _shipData.wounded;
+        _damagedValue = _shipData.damaged;
         _startHealth = (float)_currentHealth;
-        Health = _currentHealth;
+        
         _healthSlider = _healthBar.GetComponent<Slider>();
         _healthSlider.value = (float)_currentHealth / _startHealth;
 
-
         _anim = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
         if (isInStartPosition)
         {
-            transform.position += transform.up * Time.deltaTime * _speed.speed;
+            transform.position += transform.up * Time.deltaTime * _speed;
         }
             
     }
     public void Damage(int damageAmount)
     {
-        if (Health >= 1)
+        if (_currentHealth >= 1)
         {
             SoundManager.Instance.HitSound();
+            _currentHealth -= damageAmount;
         }
-        else
+        else if (_currentHealth < 0)
         {
-            return;
+            _currentHealth = 0;
         }
-        
-        Health -= damageAmount;
-        _currentHealth = Health;
-        _healthSlider.value = (float)_currentHealth / _startHealth;
-        
+            
 
-        if (Health < _woundedValue.wounded)
+        _healthSlider.value = (float)_currentHealth / _startHealth;
+
+        if (_currentHealth < _woundedValue)
         {
             _anim.SetTrigger("Wounded");
         }
 
-        if (Health < _damagedValue.damaged)
+        if (_currentHealth < _damagedValue)
         {
             _anim.SetTrigger("Damaged");
         }
 
-        if (Health < 1)
+        if (_currentHealth == 0 && !dead)
         {
             _anim.SetTrigger("Explosion");
             SoundManager.Instance.SmallExplosion();
+
+            if (OnDestroy != null)
+            {
+                OnDestroy();
+            }
+
+            dead = true;
             Destroy(gameObject, 0.8f);
         }
     }

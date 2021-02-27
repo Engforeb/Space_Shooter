@@ -6,7 +6,8 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private Animator _anim;
-    private bool _hitTarget;
+
+    private bool _isTargetHit;
 
     private void OnEnable()
     {
@@ -14,7 +15,7 @@ public class Bullet : MonoBehaviour
     }
     private void Update()
     {
-        if (_hitTarget == false)
+        if (_isTargetHit == false)
         {
             transform.position += transform.up * Time.deltaTime * _bulletSpeed;
             Destroy(gameObject, 5);
@@ -24,7 +25,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _hitTarget = true;
+        _isTargetHit = true;
         
         IDamageable obj = collision.GetComponent<IDamageable>();
         if (obj != null)

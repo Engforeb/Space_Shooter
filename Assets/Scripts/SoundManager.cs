@@ -5,23 +5,8 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager _instance;
-    public static SoundManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("Sound Manager is NULL.");
-            }
-
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        _instance = this;
-    }
+    public static SoundManager Instance => _instance;
+    private void Awake() => _instance = this;
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _playerHit;
@@ -45,5 +30,4 @@ public class SoundManager : MonoBehaviour
         _audioSource.clip = _playerExplosion;
         _audioSource.Play();
     }
-
 }
