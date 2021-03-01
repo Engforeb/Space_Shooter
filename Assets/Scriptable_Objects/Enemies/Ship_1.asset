@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ship_1
   m_EditorClassIdentifier: 
   shipName: Ship_01
-  speed: 0
+  speed: 0.5
   wounded: 25
   damaged: 10

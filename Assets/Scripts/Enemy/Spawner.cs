@@ -11,12 +11,29 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Transform[] _positionGrid;
     [SerializeField] private Transform _gridStartPosition;
 
-    private WaitForSeconds _intervalBetweenShips;
+    [SerializeField] private float _timeToGetToPosition;
+    [SerializeField] private WaitForSeconds _intervalBetweenShips;
+
+    private int _killedShips;
+
+    public delegate void AllKilledShips();
+    public static event AllKilledShips OnAllShipsKilled;
+
+
+    private void OnEnable()
+    {
+        StartCoroutine(GetShipsInPlace(_shipPrefab));
+        EnemyShipBehavior.OnDestroy += KilledShipsCounter;
+    }
+
+    private void OnDisable()
+    {
+        EnemyShipBehavior.OnDestroy -= KilledShipsCounter;
+    }
 
     private void Start()
     {
         _intervalBetweenShips = new WaitForSeconds(_seconds);
-        StartCoroutine(GetShipsInPlace(_shipPrefab));
     }
 
     IEnumerator GetShipsInPlace(GameObject shipPrefab)
@@ -25,18 +42,36 @@ public class Spawner : MonoBehaviour
         {
             GameObject ship = Instantiate(shipPrefab, _gridStartPosition.position, Quaternion.Euler(0, 0, 180));
             
-            ship.transform.DOMove(_positionGrid[i].position, 2);
-            yield return _intervalBetweenShips; 
+            if (i != _positionGrid.Length - 1)
+            {
+                ship.transform.DOMove(_positionGrid[i].position, _timeToGetToPosition);
+                yield return _intervalBetweenShips;
+            }
+            else if (i == _positionGrid.Length - 1)
+            {
+                Tween getToPosition = ship.transform.DOMove(_positionGrid[i].position, _timeToGetToPosition);
+                getToPosition.OnComplete(() => AllInPosition());
+            }
         }
+    }
 
-        yield return new WaitForSeconds(1);
-        
+    private void AllInPosition()
+    {
         EnemyShipBehavior[] ships = GameObject.FindObjectsOfType<EnemyShipBehavior>();
 
         foreach (var ship in ships)
         {
             ship.isInStartPosition = true;
         }
+    }
+
+    private void KilledShipsCounter()
+    {
+        _killedShips++;
+        if (_killedShips % _positionGrid.Length == 0)
+        {
+            this.gameObject.SetActive(false);
+        }   
     }
 
 }

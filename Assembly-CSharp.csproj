@@ -65,13 +65,14 @@
     <Compile Include="Assets\Scripts\Background\BG_3.cs" />
     <Compile Include="Assets\Scripts\Background\Background.cs" />
     <Compile Include="Assets\Scripts\Background\BG_1.cs" />
+    <Compile Include="Assets\Scripts\KillCount.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyShipBehavior.cs" />
     <Compile Include="Assets\Scripts\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyShip01.cs" />
     <Compile Include="Assets\Scripts\ShipsBackToTopCollider.cs" />
     <Compile Include="Assets\Scripts\Background\BG_2.cs" />
-    <Compile Include="Assets\Scripts\KillCount.cs" />
+    <Compile Include="Assets\Scripts\SpawnManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

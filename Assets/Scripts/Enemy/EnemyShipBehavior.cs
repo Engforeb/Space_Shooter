@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class EnemyShipBehavior : MonoBehaviour, IDamageable
 {
-    public bool isInStartPosition { get; set; }
+    public bool isInStartPosition;
 
     [SerializeField] private int _currentHealth;
     [SerializeField] private Animator _anim;
