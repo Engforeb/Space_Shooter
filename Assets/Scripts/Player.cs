@@ -23,6 +23,8 @@ public class Player : MonoBehaviour, IDamageable
     private float _lastYPosition;
     private Vector3 _offsetDistance;
 
+    private WaitForSeconds _muzzleQuencherTime, _fireRateYield;
+
     [SerializeField] private int _health;
     public int Health => _health;
 
@@ -34,6 +36,8 @@ public class Player : MonoBehaviour, IDamageable
         GetScreenAndPlayerBounds();
 
         _lastYPosition = transform.position.y;
+        _muzzleQuencherTime = new WaitForSeconds(0.05f);
+        _fireRateYield = new WaitForSeconds(_fireRate);
     }
 
     
@@ -52,7 +56,7 @@ public class Player : MonoBehaviour, IDamageable
     void OnMouseDown()
     {
         _offsetDistance = MousePositionInWorld() - transform.position;
-        StartCoroutine(ContinousShoot(_bullet));
+        StartCoroutine(ContinousShoot(/*_bullet*/));
     }
 
     private Vector3 MousePositionInWorld()
@@ -104,24 +108,28 @@ public class Player : MonoBehaviour, IDamageable
         _lastYPosition = currentPosition;
     }
 
-    private IEnumerator ContinousShoot(GameObject bullet)
+    private IEnumerator ContinousShoot()
     {
         while (Input.GetMouseButton(0))
         {
             _leftMuzzleFlash.SetActive(true);
             _audio.Play();
-            Instantiate(bullet, _leftSocket.transform.position, Quaternion.identity, _leftSocket.transform);
+
+            GameObject leftBullet = BulletPool.Instance.BulletRequest();
+            leftBullet.transform.position = _leftSocket.transform.position;
 
             _rightMuzzleFlash.SetActive(true);
             _audio.Play();
-            Instantiate(bullet, _rightSocket.transform.position, Quaternion.identity, _rightSocket.transform);
 
-            yield return new WaitForSeconds(0.05f); //to quench fire immediately
+            GameObject rightBullet = BulletPool.Instance.BulletRequest();
+            rightBullet.transform.position = _rightSocket.transform.position;
+
+            yield return _muzzleQuencherTime;
 
             _leftMuzzleFlash.SetActive(false);
             _rightMuzzleFlash.SetActive(false);
 
-            yield return new WaitForSeconds(_fireRate);
+            yield return _fireRateYield;
         }
     }
 

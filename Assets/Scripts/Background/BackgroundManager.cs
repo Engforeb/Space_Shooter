@@ -6,76 +6,89 @@ public class BackgroundManager : MonoBehaviour
 {
     private static BackgroundManager _instance;
     public static BackgroundManager Instance => _instance;
-
     private void Awake()
     {
         _instance = this;
     }
 
-    [SerializeField] private int _backgroundsNumber;
-    [SerializeField] private GameObject _backgroundPrefab;
-    
-    private GameObject[] _backgrounds;
+    public int backgroundsNumber => _backgroundsNumber;
+    public float ResizeFactor => _resizeFactor;
 
-    private SpriteRenderer _spriteRenderer;
-    private Sprite _sprite;
+    [SerializeField] private int _backgroundsNumber;
+
+    //individual sprites of backgrounds
+    [SerializeField] private GameObject[] _backgroundPrefabLayers = new GameObject[4];
+    
+    //parent game objects
+    [SerializeField] private GameObject[] _backgroundLayers = new GameObject[4]; 
+    
+    private GameObject[] _sky; //background of three sprites
+    private GameObject[] _stars;
+    private GameObject[] _meteors;
+    private GameObject[] _planets;
+
+    private float _resizeFactor;
+    
 
     private void Start()
     {
-        _backgrounds = new GameObject[_backgroundsNumber];
+        _sky = new GameObject[_backgroundsNumber];
+        _stars = new GameObject[_backgroundsNumber];
+        _meteors = new GameObject[_backgroundsNumber];
+        _planets = new GameObject[_backgroundsNumber];
 
-        for (int i = 0; i < _backgroundsNumber; i++)
-        {
-            _backgrounds[i] = Instantiate(_backgroundPrefab, this.transform);
-        }
+        InitiateBackgrounds(_backgroundPrefabLayers[0], _backgroundLayers[0], _sky);
+        GetBackgroundsToStartPosition(_sky);
 
-        _spriteRenderer = _backgrounds[0].GetComponent<SpriteRenderer>();
-        _sprite = _spriteRenderer.sprite;
+        InitiateBackgrounds(_backgroundPrefabLayers[1], _backgroundLayers[1], _stars);
+        GetBackgroundsToStartPosition(_stars);
 
-        GetBackgroundsToStartPosition();
+        InitiateBackgrounds(_backgroundPrefabLayers[2], _backgroundLayers[2], _meteors);
+        GetBackgroundsToStartPosition(_meteors);
+
+        InitiateBackgrounds(_backgroundPrefabLayers[3], _backgroundLayers[3], _planets);
+        GetBackgroundsToStartPosition(_planets);
     }
 
-    private Vector2 BackgroundSize()
+    public Vector2 BackgroundSize(GameObject[] backgrounds)
     {
         float worldScreenHeight = Camera.main.orthographicSize * 2;
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
-        float resizeFactor = worldScreenWidth / _sprite.bounds.size.x;
+        SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
+        Sprite sprite = spriteRenderer.sprite;
+        _resizeFactor = worldScreenWidth / sprite.bounds.size.x;
 
-        for (int i = 0; i < _backgrounds.Length; i++)
+        for (int i = 0; i < backgrounds.Length; i++)
         {
-            _backgrounds[i].transform.localScale = new Vector3(resizeFactor, resizeFactor, 1);
+            backgrounds[i].transform.localScale = new Vector3(_resizeFactor, _resizeFactor, 1);
         }
 
-        return new Vector2(_spriteRenderer.bounds.size.x, _spriteRenderer.bounds.size.y);
+        return new Vector2(spriteRenderer.bounds.size.x, spriteRenderer.bounds.size.y);
     }
 
-    private void GetBackgroundsToStartPosition()
+    private void GetBackgroundsToStartPosition(GameObject[] backgrounds)
     {
-        for (int i = 0; i < _backgrounds.Length; i++)
+        for (int i = 0; i < backgrounds.Length; i++)
         {
             if (i == 0)
             {
-                _backgrounds[i].transform.position = new Vector2(0, 0);
+                backgrounds[i].transform.position = new Vector2(0, 0);
             }
             else
             {
-                _backgrounds[i].transform.position = new Vector2(0, _backgrounds[i - 1].transform.position.y + BackgroundSize().y);
+                backgrounds[i].transform.position = new Vector2(0, backgrounds[i - 1].transform.position.y + BackgroundSize(backgrounds).y);
             }
         }
     }
 
-    public float MoveUpY()
-    {
-        float highestY = -100f;
+    
 
+    private void InitiateBackgrounds(GameObject backgroundPrefabLayers, GameObject backgroundLayers, GameObject[] backgrounds)
+    {
         for (int i = 0; i < _backgroundsNumber; i++)
         {
-            if (_backgrounds[i].transform.position.y > highestY)
-            {
-                highestY = _backgrounds[i].transform.position.y;
-            }
+            backgrounds[i] = Instantiate(backgroundPrefabLayers, backgroundLayers.transform);
         }
-        return highestY + BackgroundSize().y;
     }
 }

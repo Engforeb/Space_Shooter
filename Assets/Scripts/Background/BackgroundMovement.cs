@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class BackgroundMovement : MonoBehaviour
 {
-    protected float _backgroundSpeed = 0.5f;
+    [SerializeField] protected float _backgroundSpeed = 0.5f;
     private SpriteRenderer _spriteRenderer;
     private float _myHeight;
+    private GameObject[] _mySiblingsAndI;
+
 
     private void Start()
     {
+        string myTag = this.gameObject.tag;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _myHeight = _spriteRenderer.bounds.size.y;
+        _mySiblingsAndI = GameObject.FindGameObjectsWithTag(myTag);
     }
     protected void LateUpdate()
     {
@@ -19,8 +23,25 @@ public class BackgroundMovement : MonoBehaviour
 
         if (transform.position.y <= -_myHeight)
         {
-            var moveUpY = BackgroundManager.Instance.MoveUpY();
+            float moveUpY = MoveUpY(_mySiblingsAndI);
             transform.position = new Vector2(0, moveUpY-0.01f);
         }
     }
+
+    public float MoveUpY(GameObject[] backgrounds)
+    {
+        float highestY = -100f;
+
+        for (int i = 0; i < BackgroundManager.Instance.backgroundsNumber; i++)
+        {
+            if (backgrounds[i].transform.position.y > highestY)
+            {
+                highestY = backgrounds[i].transform.position.y;
+            }
+        }
+        return highestY + BackgroundManager.Instance.BackgroundSize(backgrounds).y;
+
+    }
+
+
 }

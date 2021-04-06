@@ -8,6 +8,13 @@ TagManager:
   - PlayerShots
   - Enemy
   - HealthUnit
+  - Background_Sky
+  - Background_Stars
+  - Background_Meteors
+  - Background_Planets
+  - Positions
+  - Maneuvering
+  - Bullet
   layers:
   - Default
   - TransparentFX

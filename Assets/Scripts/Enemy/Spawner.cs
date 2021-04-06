@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class Spawner : MonoBehaviour
 {
@@ -14,14 +15,30 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float _timeToGetToPosition;
     [SerializeField] private WaitForSeconds _intervalBetweenShips;
 
+    [SerializeField] private GameObject _positions;
+    [SerializeField] private GameObject _maneuvering;
+
+    [SerializeField] [Range(0, 10)] private float _rotationSpeed;
+
     private int _killedShips;
 
     public delegate void AllKilledShips();
     public static event AllKilledShips OnAllShipsKilled;
 
+    private Vector3 _initialScale;
+    private Vector3 _initialPosition;
+
+    public delegate void AllInPlace();
+    public static event AllInPlace OnAllInPlace;
 
     private void OnEnable()
     {
+        _initialScale = _positions.transform.localScale;
+        _positions.transform.localScale *= BackgroundManager.Instance.ResizeFactor;
+
+        _initialPosition = this.transform.position;
+        this.transform.position = new Vector3(0, this.transform.position.y / BackgroundManager.Instance.ResizeFactor, 0);
+
         StartCoroutine(GetShipsInPlace(_shipPrefab));
         EnemyShipBehavior.OnDestroy += KilledShipsCounter;
     }
@@ -29,6 +46,8 @@ public class Spawner : MonoBehaviour
     private void OnDisable()
     {
         EnemyShipBehavior.OnDestroy -= KilledShipsCounter;
+        _positions.transform.localScale = _initialScale;
+        this.transform.position = _initialPosition;
     }
 
     private void Start()
@@ -41,6 +60,7 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < _positionGrid.Length; i++)
         {
             GameObject ship = Instantiate(shipPrefab, _gridStartPosition.position, Quaternion.Euler(0, 0, 180));
+            ship.transform.SetParent(_maneuvering.transform, true);
             
             if (i != _positionGrid.Length - 1)
             {
@@ -57,12 +77,17 @@ public class Spawner : MonoBehaviour
 
     private void AllInPosition()
     {
-        EnemyShipBehavior[] ships = GameObject.FindObjectsOfType<EnemyShipBehavior>();
-
-        foreach (var ship in ships)
+        if (OnAllInPlace != null)
         {
-            ship.isInStartPosition = true;
+            OnAllInPlace();
         }
+        
+        //EnemyShipBehavior[] ships = GameObject.FindObjectsOfType<EnemyShipBehavior>();
+
+        //foreach (var ship in ships)
+        //{
+        //    ship.isInStartPosition = true;
+        //}
     }
 
     private void KilledShipsCounter()
@@ -70,6 +95,11 @@ public class Spawner : MonoBehaviour
         _killedShips++;
         if (_killedShips % _positionGrid.Length == 0)
         {
+            if (OnAllShipsKilled != null)
+            {
+                OnAllShipsKilled();
+            }
+            
             this.gameObject.SetActive(false);
         }   
     }
