@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BackgroundMovement : MonoBehaviour
 {
@@ -40,7 +38,6 @@ public class BackgroundMovement : MonoBehaviour
             }
         }
         return highestY + BackgroundManager.Instance.BackgroundSize(backgrounds).y;
-
     }
 
 

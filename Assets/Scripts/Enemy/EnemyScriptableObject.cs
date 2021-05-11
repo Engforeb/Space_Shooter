@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor.Animations;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Ship", menuName = "Enemy Ship")]
 public class EnemyScriptableObject : ScriptableObject

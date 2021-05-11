@@ -5,7 +5,18 @@ using UnityEngine;
 public class BulletPool : MonoBehaviour
 {
     private static BulletPool _instance;
-    public static BulletPool Instance => _instance;
+    public static BulletPool Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new BulletPool();
+            }
+
+            return _instance;
+        }
+    }
 
     private void Awake() 
     {

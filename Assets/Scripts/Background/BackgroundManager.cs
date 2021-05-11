@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BackgroundManager : MonoBehaviour
 {
@@ -22,7 +20,7 @@ public class BackgroundManager : MonoBehaviour
     //parent game objects
     [SerializeField] private GameObject[] _backgroundLayers = new GameObject[4]; 
     
-    private GameObject[] _sky; //background of three sprites
+    private GameObject[] _sky;
     private GameObject[] _stars;
     private GameObject[] _meteors;
     private GameObject[] _planets;
@@ -61,7 +59,7 @@ public class BackgroundManager : MonoBehaviour
 
         for (int i = 0; i < backgrounds.Length; i++)
         {
-            backgrounds[i].transform.localScale = new Vector3(_resizeFactor, _resizeFactor, 1);
+            backgrounds[i].transform.localScale = new Vector3(_resizeFactor * 1.05f, _resizeFactor * 1.05f, 1);
         }
 
         return new Vector2(spriteRenderer.bounds.size.x, spriteRenderer.bounds.size.y);
@@ -81,8 +79,6 @@ public class BackgroundManager : MonoBehaviour
             }
         }
     }
-
-    
 
     private void InitiateBackgrounds(GameObject backgroundPrefabLayers, GameObject backgroundLayers, GameObject[] backgrounds)
     {

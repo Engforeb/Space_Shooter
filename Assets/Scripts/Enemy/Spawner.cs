@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Events;
+using System;
 
 public class Spawner : MonoBehaviour
 {
@@ -18,18 +17,14 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject _positions;
     [SerializeField] private GameObject _maneuvering;
 
-    [SerializeField] [Range(0, 10)] private float _rotationSpeed;
-
     private int _killedShips;
 
-    public delegate void AllKilledShips();
-    public static event AllKilledShips OnAllShipsKilled;
+    public static Action OnAllShipsKilled;
 
     private Vector3 _initialScale;
     private Vector3 _initialPosition;
 
-    public delegate void AllInPlace();
-    public static event AllInPlace OnAllInPlace;
+    public static Action OnAllInPlace;
 
     private void OnEnable()
     {
@@ -76,18 +71,8 @@ public class Spawner : MonoBehaviour
     }
 
     private void AllInPosition()
-    {
-        if (OnAllInPlace != null)
-        {
-            OnAllInPlace();
-        }
-        
-        //EnemyShipBehavior[] ships = GameObject.FindObjectsOfType<EnemyShipBehavior>();
-
-        //foreach (var ship in ships)
-        //{
-        //    ship.isInStartPosition = true;
-        //}
+    {   
+        OnAllInPlace?.Invoke();
     }
 
     private void KilledShipsCounter()
@@ -95,13 +80,11 @@ public class Spawner : MonoBehaviour
         _killedShips++;
         if (_killedShips % _positionGrid.Length == 0)
         {
-            if (OnAllShipsKilled != null)
-            {
-                OnAllShipsKilled();
-            }
+           
+            OnAllShipsKilled?.Invoke();
+           
             
             this.gameObject.SetActive(false);
         }   
     }
-
 }

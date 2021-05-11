@@ -1,14 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float _bulletSpeed;
-    private WaitForSeconds _secondsBeforeDestroy, _tinyPause;
-    [SerializeField] private float _waitTimeBeforeDeactivate = 2f;
     public Transform _bulletPool;
 
+    [SerializeField] private float _bulletSpeed;
+    [SerializeField] private float _waitTimeBeforeDeactivate = 2f;
+
+    private WaitForSeconds _secondsBeforeDestroy;
     private bool _isTargetHit;
 
     private void Awake()
@@ -17,8 +17,7 @@ public class Bullet : MonoBehaviour
         _isTargetHit = false;
     }
     private void OnEnable()
-    {
-       
+    {  
         transform.parent = null;
         _isTargetHit = false;
     }
@@ -26,15 +25,19 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         _secondsBeforeDestroy = new WaitForSeconds(_waitTimeBeforeDeactivate);
-        _tinyPause = new WaitForSeconds(0.01f);
     }
     private void Update()
     {
         if (_isTargetHit == false)
         {
-            transform.position += transform.up * Time.deltaTime * _bulletSpeed;
+            Move();
             StartCoroutine(WaitAndDeactivate(gameObject));
         }
+    }
+
+    private void Move()
+    {
+        transform.position += transform.up * Time.deltaTime * _bulletSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,30 +54,14 @@ public class Bullet : MonoBehaviour
             GameObject explosion = BulletExplosionPool.Instance.ExplosionRequest();
             explosion.transform.position = transform.position;
             explosion.GetComponent<ParticleSystem>().Play();
-            
-            if (gameObject.activeInHierarchy == true)
-            {
-                StartCoroutine(DisactivateAfterTinyPause());
-            }
+
+            gameObject.SetActive(false);
         }
     }
-
     private IEnumerator WaitAndDeactivate(GameObject bullet)
     {
         yield return _secondsBeforeDestroy;
-        //_anim.SetTrigger("Off");
-        this.gameObject.transform.SetParent(_bulletPool);
-        this.gameObject.SetActive(false);
-        
-    }
-
-    private IEnumerator DisactivateAfterTinyPause()
-    {
-        yield return _tinyPause;
-        //_anim.SetTrigger("Off");
-        this.gameObject.transform.SetParent(_bulletPool);
+        gameObject.transform.SetParent(_bulletPool);
         gameObject.SetActive(false);
     }
-
-    
 }

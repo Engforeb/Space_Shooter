@@ -85,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2505702599986202163}
   - component: {fileID: 2505702599986202160}
-  - component: {fileID: 2505702599986202162}
   - component: {fileID: 2505702599986202161}
   - component: {fileID: 2505702599986202318}
   - component: {fileID: 2505702599986202319}
@@ -168,25 +167,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &2505702599986202162
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2505702599986202165}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7f6328d6b9ba66b40a163aa02f4476ae, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2505702599986202161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,11 +180,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHealth: 50
-  _anim: {fileID: 2505702599986202162}
+  _anim: {fileID: 0}
   _shipData: {fileID: 11400000, guid: 1c7c9306ceceeb14a98dbc24a901632c, type: 2}
   _healthBar: {fileID: 2505702600124579889}
-  _hitExplosion: {fileID: 107096, guid: 79b0a8abb1f641b4a8faa10b904758ea, type: 3}
-  _collider: {fileID: 2505702599986202318}
   _shipExplosion: {fileID: 121806, guid: 4dbaeaca9d7e967419f27723f2718287, type: 3}
   _wounded: {fileID: 1075980348195929801}
   _whiteSmoke: {fileID: 8177557489463241362}
@@ -944,7 +922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 150596, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 434340, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
       propertyPath: m_RootOrder
@@ -1000,6 +978,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 434340, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.9622642
+      objectReference: {fileID: 0}
+    - target: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.82195956
+      objectReference: {fileID: 0}
+    - target: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.539231
+      objectReference: {fileID: 0}
+    - target: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19819218, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19979436, guid: 341fc2e91226cc747a53965fecbee5c6, type: 3}
