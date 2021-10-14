@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Ship", menuName = "Enemy Ship")]
-public class EnemyScriptableObject : ScriptableObject
+namespace Enemy
 {
-    public string shipName;
-    public float speed;
-    public int wounded;
-    public int damaged;
+    [CreateAssetMenu(fileName = "New Ship", menuName = "Enemy Ship")]
+    public class EnemyScriptableObject : ScriptableObject
+    {
+        public string shipName;
+        public float speed;
+        public int wounded;
+        public int damaged;
+    }
 }

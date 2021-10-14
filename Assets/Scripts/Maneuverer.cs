@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Enemy;
+
 public class Maneuverer : MonoBehaviour
 {
     [SerializeField] private DOTweenAnimation _tweens;

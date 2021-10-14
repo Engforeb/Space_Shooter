@@ -2,75 +2,76 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class EnemyShipBehavior : MonoBehaviour, IDamageable
+namespace Enemy
 {
-    [SerializeField] private int _currentHealth;
-    [SerializeField] private EnemyScriptableObject _shipData;
-    [SerializeField] private RectTransform _healthBar;
-    [SerializeField] private GameObject _shipExplosion, _wounded, _whiteSmoke;
+    public abstract class EnemyShipBehavior : MonoBehaviour, IDamageable
+    {
+        [SerializeField] private int currentHealth;
+        [SerializeField] private EnemyScriptableObject shipData;
+        [SerializeField] private RectTransform healthBar;
+        [SerializeField] private GameObject shipExplosion, wounded, whiteSmoke;
 
-    private float _startHealth;
-    private int _woundedValue; 
-    private int _damagedValue;
+        private float _startHealth;
+        private int _woundedValue; 
+        private int _damagedValue;
     
-    private Slider _healthSlider;
+        private Slider _healthSlider;
 
-    public static event Action OnDestroy;
+        public static event Action OnDestroy;
 
-    private bool _dead;
-    private bool _woundedAnim, _smokeAnim;
+        private bool _dead;
+        private bool _woundedAnim, _smokeAnim;
 
-    private void OnEnable()
-    {
-        _woundedAnim = false;
-    }
+        private void OnEnable()
+        {
+            _woundedAnim = false;
+        }
 
-    private void Start()
-    {
-        _woundedValue = _shipData.wounded;
-        _damagedValue = _shipData.damaged;
-        _startHealth = (float)_currentHealth;
+        private void Start()
+        {
+            _woundedValue = shipData.wounded;
+            _damagedValue = shipData.damaged;
+            _startHealth = currentHealth;
         
-        _healthSlider = _healthBar.GetComponent<Slider>();
-        _healthSlider.value = (float)_currentHealth / _startHealth;
+            _healthSlider = healthBar.GetComponent<Slider>();
+            _healthSlider.value = currentHealth / _startHealth;
 
-        _wounded.SetActive(false);
-        _whiteSmoke.SetActive(false);
-    }
-    public void Damage(int damageAmount)
-    {   
-        if (_currentHealth >= 1)
-        {
-            _currentHealth -= damageAmount;
+            wounded.SetActive(false);
+            whiteSmoke.SetActive(false);
         }
-        else if (_currentHealth < 0)
-        {
-            _currentHealth = 0;
-        }   
-
-        _healthSlider.value = _currentHealth / _startHealth;
-
-        if (_currentHealth < _woundedValue)
-        {
-            if (!_woundedAnim)
+        public void Damage(int damageAmount)
+        {   
+            if (currentHealth >= 1)
             {
-                _wounded.gameObject.SetActive(true);
-                _woundedAnim = true;
+                currentHealth -= damageAmount;
             }
-        }
-
-        if (_currentHealth < _damagedValue)
-        {
-            if (!_smokeAnim)
+            else if (currentHealth < 0)
             {
-                _whiteSmoke.gameObject.SetActive(true);
-                _smokeAnim = true;
-            }
-        }
+                currentHealth = 0;
+            }   
 
-        if (_currentHealth == 0 && !_dead)
-        {
-            GameObject explosion = Instantiate(_shipExplosion);
+            _healthSlider.value = currentHealth / _startHealth;
+
+            if (currentHealth < _woundedValue)
+            {
+                if (!_woundedAnim)
+                {
+                    wounded.gameObject.SetActive(true);
+                    _woundedAnim = true;
+                }
+            }
+
+            if (currentHealth < _damagedValue)
+            {
+                if (!_smokeAnim)
+                {
+                    whiteSmoke.gameObject.SetActive(true);
+                    _smokeAnim = true;
+                }
+            }
+
+            if (currentHealth != 0 || _dead) return;
+            GameObject explosion = Instantiate(shipExplosion);
             explosion.transform.position = transform.position;
             Destroy(explosion, 1f);
             

@@ -1,4 +1,7 @@
-﻿public class EnemyShip01 : EnemyShipBehavior
+﻿namespace Enemy
 {
+    public class EnemyShip01 : EnemyShipBehavior
+    {
     
+    }
 }
