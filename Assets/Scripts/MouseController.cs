@@ -1,16 +1,21 @@
-﻿using Interfaces;
+﻿using System;
+using Interfaces;
 using UnityEngine;
 
 public class MouseController : MonoBehaviour, IInputtable
 {
+    public float Horizontal { get; private set; }
+    public float Vertical { get; private set; }
+    
     private Camera _camera;
     private Vector3 _offsetDistance;
     private IGetSizeable _gameObjectSize;
     private IGetSizeable _screenBounds;
     private IAnimatable _animator;
+    private IShootable[] _shooters;
     private float _lastYPosition;
     private static readonly int AnimatorMove = Animator.StringToHash("Move");
-    private void Awake()
+    private void Start()
     {
         Init();
     }
@@ -21,11 +26,7 @@ public class MouseController : MonoBehaviour, IInputtable
         _screenBounds = gameObject.AddComponent<CurrentScreen>();
         _gameObjectSize = GetComponent<IGetSizeable>();
         _animator = GetComponent<IAnimatable>();
-    }
-
-    private void OnMouseDrag()
-    {
-        UserInput();
+        _shooters = GetComponents<IShootable>();
     }
 
     public void UserInput()
@@ -40,7 +41,13 @@ public class MouseController : MonoBehaviour, IInputtable
         
         ForwardChecker();
     }
-    
+
+    private void Update()
+    {
+        Horizontal = Input.mousePosition.x;
+        Vertical = Input.mousePosition.y;
+    }
+
     private float LimitByX()
     {
         return Mathf.Clamp(MousePositionInWorld().x - _offsetDistance.x,
@@ -61,8 +68,8 @@ public class MouseController : MonoBehaviour, IInputtable
     private Vector3 MousePositionInWorld()
     {
         return _camera.ScreenToWorldPoint(new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
+            Horizontal,
+            Vertical,
             _camera.WorldToScreenPoint(transform.position).z)
         );
     }
@@ -70,6 +77,10 @@ public class MouseController : MonoBehaviour, IInputtable
     void OnMouseDown()
     {
         _offsetDistance = MousePositionInWorld() - transform.position;
+        foreach (var shooter in _shooters)
+        {
+            shooter.Shoot();
+        }
     }
     
     private void ForwardChecker()

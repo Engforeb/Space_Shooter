@@ -13697,7 +13697,6 @@ GameObject:
   - component: {fileID: 1277907639}
   - component: {fileID: 1277907640}
   - component: {fileID: 1277907638}
-  - component: {fileID: 1277907644}
   - component: {fileID: 1277907641}
   - component: {fileID: 1277907642}
   - component: {fileID: 1277907643}
@@ -14083,6 +14082,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bbd567f7c271340b62449dc3baaed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedController: 1
+  _keyboardControllerSpeed: 5
 --- !u!114 &1277907642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14117,18 +14118,6 @@ MonoBehaviour:
   _audio: {fileID: 1277907640}
   _muzzleFlashParticles: {fileID: 678462579}
   _fireRate: 0.1
---- !u!114 &1277907644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1277907634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5427ce6509095f5459894444375050de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1293372735
 GameObject:
   m_ObjectHideFlags: 0

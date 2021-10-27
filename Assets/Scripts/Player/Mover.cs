@@ -1,10 +1,25 @@
-﻿using Interfaces;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Interfaces;
 using UnityEngine;
 
 namespace Player
 {
     public class Mover : MonoBehaviour, IMovable
     {
+        [SerializeField] private Controller selectedController = Controller.Mouse;
+        [SerializeField] private float _keyboardControllerSpeed;
+        
+        private MouseController _mouseController;
+        private KeyboardController _keyboardController;
+        
+        
+        private enum Controller
+        {
+            Mouse,
+            Keyboard
+        };
+        
         private IInputtable _userInput;
         
         public void Move()
@@ -13,7 +28,18 @@ namespace Player
         }
         
         private void Init()
-        {
+        {   
+            
+            if (selectedController == Controller.Mouse)
+            {
+                _mouseController = gameObject.AddComponent<MouseController>();
+            }
+            else if (selectedController == Controller.Keyboard)
+            {
+                _keyboardController = gameObject.AddComponent<KeyboardController>();
+                _keyboardController.speed = _keyboardControllerSpeed;
+            }
+            
             _userInput = GetComponent<IInputtable>();
         }
         
@@ -22,9 +48,20 @@ namespace Player
             Init();
         }
 
+        private void Update()
+        {
+            if (selectedController == Controller.Keyboard)
+            {
+                Move();
+            }
+        }
+
         private void OnMouseDrag()
         {
-            Move();
+            if (selectedController == Controller.Mouse)
+            {
+                Move();
+            }
         }
     }
 }

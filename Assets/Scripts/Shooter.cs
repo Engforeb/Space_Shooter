@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooter : MonoBehaviour
+public class Shooter : MonoBehaviour, IShootable
 {
     [SerializeField] private GameObject _bullet;
     [SerializeField] private Transform _socket;
@@ -23,14 +23,14 @@ public class Shooter : MonoBehaviour
         _muzzleFlashParticles.Stop();
     }
 
-    void OnMouseDown()
+    public void Shoot()
     {
         StartCoroutine(ContinousShoot());
     }
 
     private IEnumerator ContinousShoot()
     {
-        while (Input.GetMouseButton(0))
+        while (Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftControl))
         {
             _muzzleFlashParticles.Play();
             _audio.Play();
