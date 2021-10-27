@@ -1,46 +1,62 @@
 ﻿using System;
+using Interfaces;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+namespace Player
 {
-    [SerializeField] private GameObject _megaExplosion;
-    [SerializeField] private int _health;
-    [SerializeField] private CameraShake _cameraShake;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    public int Health => _health;
-
-    public static Action OnDamage;
-    private bool _explosionStarted;
-
-    private void OnEnable()
+    public class Player : MonoBehaviour, IDamageable, IGetSizeable, IAnimatable
     {
-        _explosionStarted = false;
-    }
+        public float Width { get; private set; }
+        public float Height { get; private set; }
+        
+        public Animator Animator { get; private set; }
+        
+        [SerializeField] private GameObject megaExplosion;
+        [SerializeField] private int health;
+        [SerializeField] private CameraShake cameraShake;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        public int Health => health;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Enemy")
+        public static Action OnDamage;
+        private bool _explosionStarted;
+
+        private void Awake()
         {
-            Damage(1);
-            if (_health < 1)
-            {
-                StartCoroutine(_cameraShake.Shake(1, 0.1f));
-                if (!_explosionStarted)
-                {
-                    _explosionStarted = true;
-                    Instantiate(_megaExplosion, transform.position, Quaternion.identity);
-                    SoundManager.Instance.PlayerExplosion();
-                    _spriteRenderer.enabled = false;
-                    Destroy(this.gameObject, 2f);
-                }
-            }   
+            Width = transform.GetComponent<SpriteRenderer>().bounds.size.x;
+            Height = transform.GetComponent<SpriteRenderer>().bounds.size.y;
+            Animator = GetComponent<Animator>();
         }
-    }
 
-    public void Damage(int amount)
-    {
-        _health -= amount;
-        StartCoroutine(_cameraShake.Shake(0.2f, 0.05f));
-        OnDamage?.Invoke();
+        private void OnEnable()
+        {
+            _explosionStarted = false;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Enemy"))
+            {
+                Damage(1);
+                if (health < 1)
+                {
+                    StartCoroutine(cameraShake.Shake(1, 0.1f));
+                    if (!_explosionStarted)
+                    {
+                        _explosionStarted = true;
+                        Instantiate(megaExplosion, transform.position, Quaternion.identity);
+                        SoundManager.Instance.PlayerExplosion();
+                        spriteRenderer.enabled = false;
+                        Destroy(this.gameObject, 2f);
+                    }
+                }   
+            }
+        }
+
+        public void Damage(int amount)
+        {
+            health -= amount;
+            StartCoroutine(cameraShake.Shake(0.2f, 0.05f));
+            OnDamage?.Invoke();
+        }
     }
 }

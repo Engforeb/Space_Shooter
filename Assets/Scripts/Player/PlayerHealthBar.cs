@@ -5,20 +5,20 @@ public class PlayerHealthBar : MonoBehaviour
     [SerializeField] private GameObject _healthUnit;
     [SerializeField] private float _distanceBetweenUnits;
 
-    private Player _player;
+    private Player.Player _player;
     public static bool ShouldUpdateHealth;
 
 
     private void OnEnable()
     {
-        Player.OnDamage += DrawHealthUnits;
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        Player.Player.OnDamage += DrawHealthUnits;
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player.Player>();
         DrawHealthUnits();
     }
 
     private void OnDisable()
     {
-        Player.OnDamage -= DrawHealthUnits;
+        Player.Player.OnDamage -= DrawHealthUnits;
     }
 
     private void DrawHealthUnits()
