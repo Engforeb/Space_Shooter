@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Interfaces;
 using UnityEngine;
 
 public class Shooter : MonoBehaviour, IShootable
@@ -25,10 +26,10 @@ public class Shooter : MonoBehaviour, IShootable
 
     public void Shoot()
     {
-        StartCoroutine(ContinousShoot());
+        StartCoroutine(ContinuousShoot());
     }
 
-    private IEnumerator ContinousShoot()
+    private IEnumerator ContinuousShoot()
     {
         while (Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftControl))
         {

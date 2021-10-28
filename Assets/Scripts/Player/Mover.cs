@@ -8,7 +8,7 @@ namespace Player
     public class Mover : MonoBehaviour, IMovable
     {
         [SerializeField] private Controller selectedController = Controller.Mouse;
-        [SerializeField] private float _keyboardControllerSpeed;
+        [SerializeField] private float keyboardControllerSpeed;
         
         private MouseController _mouseController;
         private KeyboardController _keyboardController;
@@ -37,7 +37,7 @@ namespace Player
             else if (selectedController == Controller.Keyboard)
             {
                 _keyboardController = gameObject.AddComponent<KeyboardController>();
-                _keyboardController.speed = _keyboardControllerSpeed;
+                _keyboardController.speed = keyboardControllerSpeed;
             }
             
             _userInput = GetComponent<IInputtable>();

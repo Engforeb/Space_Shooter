@@ -14083,7 +14083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedController: 1
-  _keyboardControllerSpeed: 5
+  keyboardControllerSpeed: 5
 --- !u!114 &1277907642
 MonoBehaviour:
   m_ObjectHideFlags: 0
