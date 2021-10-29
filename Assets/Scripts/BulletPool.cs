@@ -1,32 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
     private static BulletPool _instance;
-    public static BulletPool Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new BulletPool();
-            }
-
-            return _instance;
-        }
-    }
+    public static BulletPool Instance => _instance;
 
     private void Awake() 
     {
-        _instance = this;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        } else {
+            _instance = this;
+        }
     }
 
-    [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private int _bulletsInPool;
-    [SerializeField] private GameObject _bulletContainer;
-    private List<GameObject> _bullets = new List<GameObject>();
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private int bulletsInPool;
+    private readonly List<GameObject> _bullets = new List<GameObject>();
 
     private void Start()
     {
@@ -35,7 +27,7 @@ public class BulletPool : MonoBehaviour
 
     private void GeneratePool()
     {
-        for (int i = 0; i < _bulletsInPool; i++)
+        for (int i = 0; i < bulletsInPool; i++)
         {
             AddBulletToPool();
         }
@@ -59,8 +51,7 @@ public class BulletPool : MonoBehaviour
     }
     private GameObject AddBulletToPool()
     {
-        GameObject bullet = Instantiate(_bulletPrefab);
-        bullet.transform.SetParent(_bulletContainer.transform);
+        GameObject bullet = Instantiate(bulletPrefab, gameObject.transform, true);
         bullet.SetActive(false);
         _bullets.Add(bullet);
         return bullet;

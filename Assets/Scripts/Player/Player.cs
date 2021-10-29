@@ -8,16 +8,16 @@ namespace Player
     {
         public float Width { get; private set; }
         public float Height { get; private set; }
-        
+        public int Health => health;
         public Animator Animator { get; private set; }
+        
+        public static Action OnDamage;
         
         [SerializeField] private GameObject megaExplosion;
         [SerializeField] private int health;
         [SerializeField] private CameraShake cameraShake;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        public int Health => health;
 
-        public static Action OnDamage;
         private bool _explosionStarted;
 
         private void Awake()

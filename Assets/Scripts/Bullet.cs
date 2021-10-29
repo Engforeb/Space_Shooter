@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Transform _bulletPool;
+    public Transform bulletPool;
 
-    [SerializeField] private float _bulletSpeed;
-    [SerializeField] private float _waitTimeBeforeDeactivate = 2f;
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float waitTimeBeforeDeactivate = 2f;
 
     private WaitForSeconds _secondsBeforeDestroy;
     private bool _isTargetHit;
 
     private void Awake()
     {
-        _bulletPool = FindObjectOfType<BulletPool>().transform;
+        bulletPool = FindObjectOfType<BulletPool>().transform;
         _isTargetHit = false;
     }
     private void OnEnable()
@@ -24,20 +24,21 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        _secondsBeforeDestroy = new WaitForSeconds(_waitTimeBeforeDeactivate);
+        _secondsBeforeDestroy = new WaitForSeconds(waitTimeBeforeDeactivate);
     }
     private void Update()
     {
         if (_isTargetHit == false)
         {
             Move();
-            StartCoroutine(WaitAndDeactivate(gameObject));
+            StartCoroutine(WaitAndDeactivate());
         }
     }
 
     private void Move()
     {
-        transform.position += transform.up * Time.deltaTime * _bulletSpeed;
+        var transform1 = transform;
+        transform1.position += transform1.up * (Time.deltaTime * bulletSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,10 +59,10 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    private IEnumerator WaitAndDeactivate(GameObject bullet)
+    private IEnumerator WaitAndDeactivate()
     {
         yield return _secondsBeforeDestroy;
-        gameObject.transform.SetParent(_bulletPool);
+        gameObject.transform.SetParent(bulletPool);
         gameObject.SetActive(false);
     }
 }
