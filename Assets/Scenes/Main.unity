@@ -2687,7 +2687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 5194603891710931791, guid: b67b358a4d6892444be1f22cb40439dc, type: 3}
-  bulletsInPool: 10
+  bulletsInPool: 50
 --- !u!4 &260225938
 Transform:
   m_ObjectHideFlags: 0
@@ -14081,7 +14081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bbd567f7c271340b62449dc3baaed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedController: 1
+  selectedController: 0
   keyboardControllerSpeed: 5
 --- !u!114 &1277907642
 MonoBehaviour:

@@ -49,11 +49,12 @@ public class Bullet : MonoBehaviour
         if (obj != null)
         {
             obj.Damage(1);
-            transform.position = collision.ClosestPoint(transform.position);
-            transform.SetParent(collision.transform);
-            
+            var position = transform.position;
+            position = collision.ClosestPoint(position);
+            transform.position = position;
+
             GameObject explosion = BulletExplosionPool.Instance.ExplosionRequest();
-            explosion.transform.position = transform.position;
+            explosion.transform.position = position;
             explosion.GetComponent<ParticleSystem>().Play();
 
             gameObject.SetActive(false);
