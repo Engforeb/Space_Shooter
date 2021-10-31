@@ -42,6 +42,7 @@ public class BulletPool : MonoBehaviour
                 if (bullet.activeInHierarchy == false)
                 {
                     bullet.SetActive(true);
+                    bullet.transform.SetParent(gameObject.transform);
                     return bullet;
                 }
             }
@@ -51,7 +52,8 @@ public class BulletPool : MonoBehaviour
     }
     private GameObject AddBulletToPool()
     {
-        GameObject bullet = Instantiate(bulletPrefab, gameObject.transform, true);
+        GameObject bullet = Instantiate(bulletPrefab);
+        bullet.transform.SetParent(gameObject.transform);
         bullet.SetActive(false);
         _bullets.Add(bullet);
         return bullet;

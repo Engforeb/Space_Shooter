@@ -11,9 +11,6 @@ GameObject:
   - component: {fileID: 2141858790671464489}
   - component: {fileID: 3270488141052663353}
   - component: {fileID: 1318797354282044985}
-  - component: {fileID: -3945388641162772856}
-  - component: {fileID: -8306981060524205270}
-  - component: {fileID: 3188252554812981411}
   - component: {fileID: 7805395500786017857}
   m_Layer: 0
   m_Name: Bullet
@@ -101,51 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPool: {fileID: 0}
   bulletSpeed: 7
-  waitTimeBeforeDeactivate: 2
---- !u!114 &-3945388641162772856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5194603891710931791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49799533f8b27ca4dbe71301ef8d2614, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPool: {fileID: 0}
-  bulletSpeed: 7
-  waitTimeBeforeDeactivate: 2
---- !u!114 &-8306981060524205270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5194603891710931791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49799533f8b27ca4dbe71301ef8d2614, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPool: {fileID: 0}
-  bulletSpeed: 0
-  waitTimeBeforeDeactivate: 2
---- !u!114 &3188252554812981411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5194603891710931791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49799533f8b27ca4dbe71301ef8d2614, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPool: {fileID: 0}
-  bulletSpeed: 0
   waitTimeBeforeDeactivate: 2
 --- !u!61 &7805395500786017857
 BoxCollider2D:
