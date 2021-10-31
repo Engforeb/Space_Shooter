@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Interfaces;
+﻿using Interfaces;
 using UnityEngine;
 
 namespace Player
@@ -10,9 +8,7 @@ namespace Player
         [SerializeField] private Controller selectedController = Controller.Mouse;
         [SerializeField] private float keyboardControllerSpeed;
         
-        private MouseController _mouseController;
         private KeyboardController _keyboardController;
-        
         
         private enum Controller
         {
@@ -32,7 +28,7 @@ namespace Player
             
             if (selectedController == Controller.Mouse)
             {
-                _mouseController = gameObject.AddComponent<MouseController>();
+                gameObject.AddComponent<MouseController>();
             }
             else if (selectedController == Controller.Keyboard)
             {
