@@ -15,6 +15,7 @@ namespace Enemy
         [SerializeField] private float timeToGetToPosition;
         [SerializeField] private GameObject positions;
         [SerializeField] private GameObject maneuvering;
+        [SerializeField] private BackgroundCompositor backgroundCompositor;
 
         private int _killedShips;
         private WaitForSeconds _intervalBetweenShips;
@@ -30,13 +31,13 @@ namespace Enemy
         {
             var localScale = positions.transform.localScale;
             _initialScale = localScale;
-            localScale *= BackgroundCompositor.Instance.ResizeFactor;
+            localScale *= backgroundCompositor.ResizeFactor;
             positions.transform.localScale = localScale;
 
             var transform1 = transform;
             var position = transform1.position;
             _initialPosition = position;
-            position = new Vector3(0, position.y / BackgroundCompositor.Instance.ResizeFactor, 0);
+            position = new Vector3(0, position.y / backgroundCompositor.ResizeFactor, 0);
             transform1.position = position;
 
             StartCoroutine(GetShipsInPlace(shipPrefab));

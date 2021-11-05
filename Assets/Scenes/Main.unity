@@ -887,6 +887,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 2115697330}
   maneuvering: {fileID: 1684435290}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!1 &78843649
 GameObject:
   m_ObjectHideFlags: 0
@@ -4821,6 +4822,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 31145726}
   maneuvering: {fileID: 1420313451}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!1 &457966789
 GameObject:
   m_ObjectHideFlags: 0
@@ -5743,6 +5745,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1100809183}
   maneuvering: {fileID: 1859167316}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!1 &545047191
 GameObject:
   m_ObjectHideFlags: 0
@@ -6091,7 +6094,7 @@ GameObject:
   - component: {fileID: 577074863}
   - component: {fileID: 577074864}
   m_Layer: 0
-  m_Name: Background_Manager
+  m_Name: Background_Compositor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6133,7 +6136,7 @@ MonoBehaviour:
   - {fileID: 5111748057259917787, guid: 4681acce0b29d854d9897484fd21a6c5, type: 3}
   - {fileID: 9040793348833362046, guid: ba057eb4e368aec41a92ef7c94798912, type: 3}
   - {fileID: 6079332758163923016, guid: f4431a9fb8b3d8b468e0de9f3a4dacb7, type: 3}
-  backgroundLayers:
+  backgroundLayerParents:
   - {fileID: 1907141232}
   - {fileID: 687582028}
   - {fileID: 840407960}
@@ -7263,6 +7266,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 2085038815}
   maneuvering: {fileID: 1332416483}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!1 &675143807
 GameObject:
   m_ObjectHideFlags: 0
@@ -7365,7 +7369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 687582029}
   m_Layer: 0
-  m_Name: Background_Layer_2
+  m_Name: Background_Parent_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8491,7 +8495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 840407961}
   m_Layer: 0
-  m_Name: Background_Layer_3
+  m_Name: Background_Parent_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9153,6 +9157,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 885680147}
   maneuvering: {fileID: 1153087383}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &923619355
 Transform:
   m_ObjectHideFlags: 0
@@ -11359,6 +11364,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1477905000}
   maneuvering: {fileID: 394685900}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1079853541
 Transform:
   m_ObjectHideFlags: 0
@@ -11650,6 +11656,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 166393381}
   maneuvering: {fileID: 1589570572}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1115994889
 Transform:
   m_ObjectHideFlags: 0
@@ -12623,6 +12630,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1606322857}
   maneuvering: {fileID: 430486859}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1171890015
 Transform:
   m_ObjectHideFlags: 0
@@ -14095,7 +14103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d302e738f93df41ba5eded8d15202d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bullet: {fileID: 5194603891710931791, guid: b67b358a4d6892444be1f22cb40439dc, type: 3}
+  _bullet: {fileID: 0}
   _socket: {fileID: 95601104}
   _audio: {fileID: 1277907640}
   _muzzleFlashParticles: {fileID: 1442060281}
@@ -14112,7 +14120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d302e738f93df41ba5eded8d15202d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bullet: {fileID: 5194603891710931791, guid: b67b358a4d6892444be1f22cb40439dc, type: 3}
+  _bullet: {fileID: 0}
   _socket: {fileID: 490953281}
   _audio: {fileID: 1277907640}
   _muzzleFlashParticles: {fileID: 678462579}
@@ -14274,6 +14282,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1959563011}
   maneuvering: {fileID: 1790148488}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1303796395
 Transform:
   m_ObjectHideFlags: 0
@@ -14402,6 +14411,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1654860166}
   maneuvering: {fileID: 1549001367}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1328766694
 Transform:
   m_ObjectHideFlags: 0
@@ -14806,7 +14816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1337233332}
   m_Layer: 0
-  m_Name: Background_Layer_4
+  m_Name: Background_Parent_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15219,6 +15229,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1138501965}
   maneuvering: {fileID: 146234703}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!1 &1371367349
 GameObject:
   m_ObjectHideFlags: 0
@@ -16667,6 +16678,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1386380736}
   maneuvering: {fileID: 664789083}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1514397595
 Transform:
   m_ObjectHideFlags: 0
@@ -17448,6 +17460,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 118325071}
   maneuvering: {fileID: 1858773674}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!1 &1570338819
 GameObject:
   m_ObjectHideFlags: 0
@@ -19248,6 +19261,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 559808245}
   maneuvering: {fileID: 988380326}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1682306319
 Transform:
   m_ObjectHideFlags: 0
@@ -20705,6 +20719,7 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 1184007654}
   maneuvering: {fileID: 1273394321}
+  backgroundCompositor: {fileID: 577074864}
 --- !u!4 &1809022917
 Transform:
   m_ObjectHideFlags: 0
@@ -22188,7 +22203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1907141233}
   m_Layer: 0
-  m_Name: Background_Layer_1
+  m_Name: Background_Parent_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

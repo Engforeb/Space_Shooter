@@ -95,4 +95,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc821717eaf692344b7353943c15fc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _backgroundSpeed: 0.4
+  backgroundSpeed: 0.8
+  backgroundCompositor: {fileID: 0}

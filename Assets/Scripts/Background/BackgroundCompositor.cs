@@ -1,71 +1,72 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Background
 {
     public class BackgroundCompositor : MonoBehaviour
     {
-        public static BackgroundCompositor Instance { get; private set; }
         public int BackgroundsNumber => backgroundsNumber;
         public float ResizeFactor { get; private set; }
 
         [SerializeField] private int backgroundsNumber;
 
-        // Individual sprites of backgrounds
         [SerializeField] private GameObject[] backgroundPrefabLayers;
     
-        // Parent game objects
-        [SerializeField] private GameObject[] backgroundLayers; 
+        [SerializeField] private GameObject[] backgroundLayerParents; 
     
-        private GameObject[] _sky;
-        private GameObject[] _stars;
-        private GameObject[] _meteors;
-        private GameObject[] _planets;
+        private static GameObject[] _sky;
+        private static GameObject[] _stars;
+        private static GameObject[] _meteors;
+        private static GameObject[] _planets;
 
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private Dictionary<int, GameObject[]> _numberOfLayer;
+        
+
         private void Start()
+        {
+            ArrangeBackgrounds();
+        }
+
+        private void ArrangeBackgrounds()
         {
             _sky = new GameObject[backgroundsNumber];
             _stars = new GameObject[backgroundsNumber];
             _meteors = new GameObject[backgroundsNumber];
             _planets = new GameObject[backgroundsNumber];
 
-            InitiateBackgrounds(backgroundPrefabLayers[0], backgroundLayers[0], _sky);
-            GetBackgroundsToStartPosition(_sky);
+            _numberOfLayer = new Dictionary<int, GameObject[]>()
+            {
+                {0, _sky},
+                {1, _stars},
+                {2, _meteors},
+                {3, _planets}
+            };
 
-            InitiateBackgrounds(backgroundPrefabLayers[1], backgroundLayers[1], _stars);
-            GetBackgroundsToStartPosition(_stars);
-
-            InitiateBackgrounds(backgroundPrefabLayers[2], backgroundLayers[2], _meteors);
-            GetBackgroundsToStartPosition(_meteors);
-
-            InitiateBackgrounds(backgroundPrefabLayers[3], backgroundLayers[3], _planets);
-            GetBackgroundsToStartPosition(_planets);
+            for (int i = 0; i < backgroundPrefabLayers.Length; i++)
+            {
+                InitiateBackgrounds(backgroundPrefabLayers[i], backgroundLayerParents[i], _numberOfLayer[i]);
+                GetBackgroundsToStartPosition(_numberOfLayer[i]);
+            }
         }
 
         public Vector2 BackgroundSize(GameObject[] backgrounds)
         {
-            if (!(Camera.main is null))
+            if (Camera.main is null) return default;
+            var worldScreenHeight = Camera.main.orthographicSize * 2;
+            var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
+
+            SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
+            Sprite sprite = spriteRenderer.sprite;
+            ResizeFactor = worldScreenWidth / sprite.bounds.size.x;
+
+            foreach (var background in backgrounds)
             {
-                float worldScreenHeight = Camera.main.orthographicSize * 2;
-                float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
-
-                SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
-                Sprite sprite = spriteRenderer.sprite;
-                ResizeFactor = worldScreenWidth / sprite.bounds.size.x;
-
-                foreach (var background in backgrounds)
-                {
-                    background.transform.localScale = new Vector3(ResizeFactor * 1.05f, ResizeFactor * 1.05f, 1);
-                }
-
-                var bounds = spriteRenderer.bounds;
-                return new Vector2(bounds.size.x, bounds.size.y);
+                background.transform.localScale = new Vector3(ResizeFactor * 1.05f, ResizeFactor * 1.05f, 1);
             }
 
-            return default;
+            var bounds = spriteRenderer.bounds;
+            return new Vector2(bounds.size.x, bounds.size.y);
+
         }
 
         private void GetBackgroundsToStartPosition(GameObject[] backgrounds)
