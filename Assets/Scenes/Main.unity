@@ -2669,7 +2669,7 @@ GameObject:
   - component: {fileID: 260225938}
   - component: {fileID: 260225937}
   m_Layer: 0
-  m_Name: BulletPool
+  m_Name: AmmoPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2687,8 +2687,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1042a987c426394fb7e390137683f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 5194603891710931791, guid: b67b358a4d6892444be1f22cb40439dc, type: 3}
-  bulletsInPool: 50
+  ammoType: 0
+  bullet: {fileID: 5194603891710931791, guid: b67b358a4d6892444be1f22cb40439dc, type: 3}
+  rocket: {fileID: 0}
+  fire: {fileID: 0}
+  laser: {fileID: 0}
+  capacity: 50
 --- !u!4 &260225938
 Transform:
   m_ObjectHideFlags: 0
@@ -6130,13 +6134,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2eb84e334cf2314f9df729f8bc9b5d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundsNumber: 3
-  backgroundPrefabLayers:
+  quantity: 3
+  layers:
   - {fileID: 1745972634859916825, guid: f45bca67bd610564c8ab94c8d9c88367, type: 3}
   - {fileID: 5111748057259917787, guid: 4681acce0b29d854d9897484fd21a6c5, type: 3}
   - {fileID: 9040793348833362046, guid: ba057eb4e368aec41a92ef7c94798912, type: 3}
   - {fileID: 6079332758163923016, guid: f4431a9fb8b3d8b468e0de9f3a4dacb7, type: 3}
-  backgroundLayerParents:
+  layerParents:
   - {fileID: 1907141232}
   - {fileID: 687582028}
   - {fileID: 840407960}
@@ -7369,7 +7373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 687582029}
   m_Layer: 0
-  m_Name: Background_Parent_2
+  m_Name: Layer_Parent_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8495,7 +8499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 840407961}
   m_Layer: 0
-  m_Name: Background_Parent_3
+  m_Name: Layer_Parent_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14103,7 +14107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d302e738f93df41ba5eded8d15202d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bullet: {fileID: 0}
   _socket: {fileID: 95601104}
   _audio: {fileID: 1277907640}
   _muzzleFlashParticles: {fileID: 1442060281}
@@ -14120,7 +14123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d302e738f93df41ba5eded8d15202d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bullet: {fileID: 0}
   _socket: {fileID: 490953281}
   _audio: {fileID: 1277907640}
   _muzzleFlashParticles: {fileID: 678462579}
@@ -14816,7 +14818,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1337233332}
   m_Layer: 0
-  m_Name: Background_Parent_4
+  m_Name: Layer_Parent_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22203,7 +22205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1907141233}
   m_Layer: 0
-  m_Name: Background_Parent_1
+  m_Name: Layer_Parent_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

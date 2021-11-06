@@ -96,9 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49799533f8b27ca4dbe71301ef8d2614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPool: {fileID: 0}
+  ammoPool: {fileID: 0}
   bulletSpeed: 7
-  waitTimeBeforeDeactivate: 2
+  lifetime: 2
+  damage: 1
 --- !u!61 &7805395500786017857
 BoxCollider2D:
   m_ObjectHideFlags: 0

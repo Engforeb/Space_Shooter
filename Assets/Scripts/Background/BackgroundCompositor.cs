@@ -5,22 +5,19 @@ namespace Background
 {
     public class BackgroundCompositor : MonoBehaviour
     {
-        public int BackgroundsNumber => backgroundsNumber;
+        public int Quantity => quantity;
         public float ResizeFactor { get; private set; }
 
-        [SerializeField] private int backgroundsNumber;
-
-        [SerializeField] private GameObject[] backgroundPrefabLayers;
-    
-        [SerializeField] private GameObject[] backgroundLayerParents; 
+        [SerializeField] private int quantity;
+        [SerializeField] private GameObject[] layers;
+        [SerializeField] private GameObject[] layerParents; 
     
         private static GameObject[] _sky;
         private static GameObject[] _stars;
         private static GameObject[] _meteors;
         private static GameObject[] _planets;
 
-        private Dictionary<int, GameObject[]> _numberOfLayer;
-        
+        private Dictionary<int, GameObject[]> _layerNumber;
 
         private void Start()
         {
@@ -29,12 +26,12 @@ namespace Background
 
         private void ArrangeBackgrounds()
         {
-            _sky = new GameObject[backgroundsNumber];
-            _stars = new GameObject[backgroundsNumber];
-            _meteors = new GameObject[backgroundsNumber];
-            _planets = new GameObject[backgroundsNumber];
+            _sky = new GameObject[quantity];
+            _stars = new GameObject[quantity];
+            _meteors = new GameObject[quantity];
+            _planets = new GameObject[quantity];
 
-            _numberOfLayer = new Dictionary<int, GameObject[]>()
+            _layerNumber = new Dictionary<int, GameObject[]>()
             {
                 {0, _sky},
                 {1, _stars},
@@ -42,10 +39,10 @@ namespace Background
                 {3, _planets}
             };
 
-            for (int i = 0; i < backgroundPrefabLayers.Length; i++)
+            for (int i = 0; i < layers.Length; i++)
             {
-                InitiateBackgrounds(backgroundPrefabLayers[i], backgroundLayerParents[i], _numberOfLayer[i]);
-                GetBackgroundsToStartPosition(_numberOfLayer[i]);
+                InitiateBackgrounds(layers[i], layerParents[i], _layerNumber[i]);
+                GetBackgroundsToStartPosition(_layerNumber[i]);
             }
         }
 
@@ -86,7 +83,7 @@ namespace Background
 
         private void InitiateBackgrounds(GameObject prefabLayers, GameObject layers, GameObject[] backgrounds)
         {
-            for (int i = 0; i < backgroundsNumber; i++)
+            for (int i = 0; i < quantity; i++)
             {
                 backgrounds[i] = Instantiate(prefabLayers, layers.transform);
             }

@@ -1,41 +1,48 @@
 ﻿using System.Collections;
+using Interfaces;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IAmmo
 {
-    public Transform bulletPool;
+    public GameObject Body => gameObject;
+    public float Speed => bulletSpeed;
+    public float Lifetime => lifetime;
+    public int Damage => damage;
+    
+    public Transform ammoPool;
 
     [SerializeField] private float bulletSpeed;
-    [SerializeField] private float waitTimeBeforeDeactivate = 2f;
-
+    [SerializeField] private float lifetime;
+    [SerializeField] private int damage;
+    
     private WaitForSeconds _secondsBeforeDestroy;
-    private bool _isTargetHit;
+    private bool _targetHit;
 
     private void Awake()
     {
-        bulletPool = FindObjectOfType<BulletPool>().transform;
-        _isTargetHit = false;
+        ammoPool = FindObjectOfType<AmmoPool>().transform;
+        _targetHit = false;
     }
     private void OnEnable()
     {  
         transform.parent = null;
-        _isTargetHit = false;
+        _targetHit = false;
     }
 
     private void Start()
     {
-        _secondsBeforeDestroy = new WaitForSeconds(waitTimeBeforeDeactivate);
+        _secondsBeforeDestroy = new WaitForSeconds(lifetime);
     }
     private void Update()
     {
-        if (_isTargetHit == false)
+        if (_targetHit == false)
         {
             Move();
             StartCoroutine(WaitAndDeactivate());
         }
     }
 
-    private void Move()
+    public void Move()
     {
         var transform1 = transform;
         transform1.position += transform1.up * (Time.deltaTime * bulletSpeed);
@@ -43,7 +50,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _isTargetHit = true;
+        _targetHit = true;
 
         IDamageable obj = collision.GetComponent<IDamageable>();
         if (obj != null)
@@ -63,7 +70,7 @@ public class Bullet : MonoBehaviour
     private IEnumerator WaitAndDeactivate()
     {
         yield return _secondsBeforeDestroy;
-        gameObject.transform.SetParent(bulletPool);
+        gameObject.transform.SetParent(ammoPool);
         gameObject.SetActive(false);
     }
 }

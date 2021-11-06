@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
 
 public class Shooter : MonoBehaviour, IShootable
 {
-    [SerializeField] private GameObject _bullet;
     [SerializeField] private Transform _socket;
     [SerializeField] private AudioSource _audio;
     [SerializeField] private ParticleSystem _muzzleFlashParticles;
@@ -13,6 +11,8 @@ public class Shooter : MonoBehaviour, IShootable
     [Range(0, 1)] [SerializeField] private float _fireRate;
 
     private WaitForSeconds _fireRateYield;
+
+    private IAmmo _ammo;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class Shooter : MonoBehaviour, IShootable
             _muzzleFlashParticles.Play();
             _audio.Play();
 
-            GameObject bullet = BulletPool.Instance.BulletRequest();
+            GameObject bullet = AmmoPool.Instance.AmmoRequest();
             bullet.transform.position = _socket.transform.position;
             bullet.transform.rotation = _socket.transform.rotation;
 
