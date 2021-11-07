@@ -7,6 +7,8 @@
 
         void FullRecharge();
 
-        IAmmo Recharge(int number);
+        void Recharge(int number);
+
+        IAmmo Release();
     }
 }

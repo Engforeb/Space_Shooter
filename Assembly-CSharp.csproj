@@ -80,7 +80,9 @@
      <Compile Include="Assets\Scripts\AmmoPool.cs" />
      <Compile Include="Assets\Epic Toon FX\Scripts\ETFXRotation.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
+     <Compile Include="Assets\Scripts\BulletMagazine.cs" />
      <Compile Include="Assets\Scripts\BulletExplosionDeactivate.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IMagazine.cs" />
      <Compile Include="Assets\Scripts\CurrentScreen.cs" />
      <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXButtonScript.cs" />
      <Compile Include="Assets\Scripts\Maneuverer.cs" />
@@ -93,8 +95,8 @@
      <Compile Include="Assets\Scripts\Interfaces\IMovable.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyShip01.cs" />
      <Compile Include="Assets\Scripts\ShipsBackToTopCollider.cs" />
-     <Compile Include="Assets\Scripts\Interfaces\IMagazine.cs" />
-     <Compile Include="Assets\Scripts\Bullets.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IWeapon.cs" />
+     <Compile Include="Assets\Scripts\Weapons\MachineGun.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
