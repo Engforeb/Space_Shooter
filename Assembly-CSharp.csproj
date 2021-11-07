@@ -68,6 +68,7 @@
      <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXLoopScript.cs" />
      <Compile Include="Assets\Scripts\KeyboardController.cs" />
      <Compile Include="Assets\Scripts\Background\BackgroundMover.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IAmmo.cs" />
      <Compile Include="Assets\Scripts\Player\Mover.cs" />
      <Compile Include="Assets\Scripts\KillCount.cs" />
      <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXFireProjectile.cs" />
@@ -92,7 +93,8 @@
      <Compile Include="Assets\Scripts\Interfaces\IMovable.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyShip01.cs" />
      <Compile Include="Assets\Scripts\ShipsBackToTopCollider.cs" />
-     <Compile Include="Assets\Scripts\Interfaces\IAmmo.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IMagazine.cs" />
+     <Compile Include="Assets\Scripts\Bullets.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
