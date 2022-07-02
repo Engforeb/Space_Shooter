@@ -49,6 +49,7 @@ namespace Background
         public Vector2 BackgroundSize(GameObject[] backgrounds)
         {
             if (Camera.main is null) return default;
+            
             var worldScreenHeight = Camera.main.orthographicSize * 2;
             var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
@@ -63,7 +64,6 @@ namespace Background
 
             var bounds = spriteRenderer.bounds;
             return new Vector2(bounds.size.x, bounds.size.y);
-
         }
 
         private void GetBackgroundsToStartPosition(GameObject[] backgrounds)
