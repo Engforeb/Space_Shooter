@@ -15,10 +15,8 @@
             RegisterServices();
             _sceneLoader.Load(Boot, onLoaded: EnterLoadLevel);
         }
-        private void EnterLoadLevel()
-        {
-            
-        }
+        private void EnterLoadLevel() => 
+            _gameStateMachine.Enter<LoadLevelState>();
         private void RegisterServices()
         {
             
