@@ -24,8 +24,7 @@ namespace Player
         }
         
         private void Init()
-        {   
-            
+        {
             if (selectedController == Controller.Mouse)
             {
                 gameObject.AddComponent<MouseController>();
