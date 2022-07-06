@@ -1,4 +1,7 @@
-﻿namespace Infrastructure
+﻿using Infrastructure.AssetManagement;
+using Infrastructure.Factory;
+using Infrastructure.Services;
+namespace Infrastructure.States
 {
     public class BootstrapState : IState
     {
@@ -20,7 +23,7 @@
         
         private void RegisterServices()
         {
-            
+            AllServices.Container.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAssets>()));
         }
         public void Exit()
         {

@@ -1,8 +1,6 @@
-﻿using Logic;
-using UnityEngine;
-
-
-namespace Infrastructure
+﻿using Infrastructure.Factory;
+using Logic;
+namespace Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
@@ -29,7 +27,7 @@ namespace Infrastructure
         
         private void OnLoaded()
         {
-            GameObject player = _gameFactory.CreatePlayer();
+            _gameFactory.CreatePlayer();
             _gameFactory.CreateHud();
             
             _stateMachine.Enter<GameLoopState>();

@@ -1,4 +1,5 @@
-﻿using Logic;
+﻿using Infrastructure.States;
+using Logic;
 namespace Infrastructure
 {
     public class Game
