@@ -1,11 +1,12 @@
-﻿namespace Infrastructure
+﻿using Logic;
+namespace Infrastructure
 {
     public class Game
     {
         public readonly GameStateMachine StateMachine;
-        public Game(ICoroutineRunner coroutineRunner)
+        public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner));
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain);
         }
     }
 }
