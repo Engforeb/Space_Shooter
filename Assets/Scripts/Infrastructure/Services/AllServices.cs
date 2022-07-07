@@ -1,7 +1,4 @@
-﻿using System.Web.DynamicData;
-using Infrastructure.AssetManagement;
-using Infrastructure.Factory;
-namespace Infrastructure.Services
+﻿namespace Infrastructure.Services
 {
     public class AllServices
     {

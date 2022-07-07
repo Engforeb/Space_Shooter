@@ -8,14 +8,17 @@ namespace Infrastructure.States
         private const string Boot = "Boot";
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
-        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
+        private readonly AllServices _services;
+        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
+            _services = services;
+            
+            RegisterServices();
         }
         public void Enter()
         {
-            RegisterServices();
             _sceneLoader.Load(Boot, onLoaded: EnterLoadLevel);
         }
         private void EnterLoadLevel() => 
@@ -23,7 +26,8 @@ namespace Infrastructure.States
         
         private void RegisterServices()
         {
-            AllServices.Container.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAssets>()));
+            _services.RegisterSingle<IAssets>(new AssetProvider());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
         }
         public void Exit()
         {
