@@ -29,6 +29,7 @@ namespace Infrastructure.States
         private void OnLoaded()
         {
             _gameFactory.CreatePlayer();
+            _gameFactory.CreateSpawnManager();
             _gameFactory.CreateHud();
             
             _stateMachine.Enter<GameLoopState>();

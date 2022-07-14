@@ -6,6 +6,7 @@ namespace Infrastructure.Factory
     {
         GameObject CreatePlayer();
         GameObject CreatePlayer(GameObject at);
+        void CreateSpawnManager();
         void CreateHud();
     }
 }

@@ -11,11 +11,14 @@ namespace Infrastructure.Factory
         {
             _assets = assets;
         }
-        public GameObject CreatePlayer() => 
+        public GameObject CreatePlayer() =>
             _assets.Instantiate(AssetPaths.PlayerPath);
 
-        public GameObject CreatePlayer(GameObject at) => 
+        public GameObject CreatePlayer(GameObject at) =>
             _assets.Instantiate(AssetPaths.PlayerPath, at.transform.position);
+
+        public void CreateSpawnManager() =>
+            _assets.Instantiate(AssetPaths.SpawnManagerPath);
 
         public void CreateHud() => 
             _assets.Instantiate(AssetPaths.HudPath);

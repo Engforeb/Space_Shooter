@@ -8,6 +8,9 @@ namespace Enemy
 {
     public class Spawner : MonoBehaviour
     {
+        public int ID => id;
+
+        [SerializeField] private int id;
         [SerializeField] GameObject shipPrefab;
         [SerializeField] private float seconds;
         [SerializeField] private Transform[] positionGrid;
@@ -15,7 +18,8 @@ namespace Enemy
         [SerializeField] private float timeToGetToPosition;
         [SerializeField] private GameObject positions;
         [SerializeField] private GameObject maneuvering;
-        [SerializeField] private BackgroundCompositor backgroundCompositor;
+        
+        private BackgroundCompositor _backgroundCompositor;
 
         private int _killedShips;
         private WaitForSeconds _intervalBetweenShips;
@@ -25,19 +29,25 @@ namespace Enemy
         private Vector3 _initialScale;
         private Vector3 _initialPosition;
 
-        public static Action OnAllInPlace;
+        public static Action OnAllInPlace
+        {
+            get;
+            set;
+        }
 
         private void OnEnable()
         {
+            _backgroundCompositor = FindObjectOfType<BackgroundCompositor>();
+            
             var localScale = positions.transform.localScale;
             _initialScale = localScale;
-            localScale *= backgroundCompositor.ResizeFactor;
+            localScale *= _backgroundCompositor.ResizeFactor;
             positions.transform.localScale = localScale;
 
             var transform1 = transform;
             var position = transform1.position;
             _initialPosition = position;
-            position = new Vector3(0, position.y / backgroundCompositor.ResizeFactor, 0);
+            position = new Vector3(0, position.y / _backgroundCompositor.ResizeFactor, 0);
             transform1.position = position;
 
             StartCoroutine(GetShipsInPlace(shipPrefab));
