@@ -22,10 +22,8 @@ namespace Enemy
         private bool _dead;
         private bool _woundedAnim, _smokeAnim;
 
-        private void OnEnable()
-        {
+        private void OnEnable() => 
             _woundedAnim = false;
-        }
 
         private void Start()
         {
@@ -40,15 +38,11 @@ namespace Enemy
             whiteSmoke.SetActive(false);
         }
         public void Damage(int damageAmount)
-        {   
+        {
             if (currentHealth >= 1)
-            {
                 currentHealth -= damageAmount;
-            }
-            else if (currentHealth < 0)
-            {
+            else if (currentHealth < 0) 
                 currentHealth = 0;
-            }   
 
             _healthSlider.value = currentHealth / _startHealth;
 

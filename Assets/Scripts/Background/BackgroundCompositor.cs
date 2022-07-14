@@ -19,10 +19,8 @@ namespace Background
 
         private Dictionary<int, GameObject[]> _layerNumber;
 
-        private void Start()
-        {
+        private void Start() => 
             ArrangeBackgrounds();
-        }
 
         private void ArrangeBackgrounds()
         {
@@ -57,10 +55,8 @@ namespace Background
             Sprite sprite = spriteRenderer.sprite;
             ResizeFactor = worldScreenWidth / sprite.bounds.size.x;
 
-            foreach (var background in backgrounds)
-            {
+            foreach (var background in backgrounds) 
                 background.transform.localScale = new Vector3(ResizeFactor * 1.05f, ResizeFactor * 1.05f, 1);
-            }
 
             var bounds = spriteRenderer.bounds;
             return new Vector2(bounds.size.x, bounds.size.y);
@@ -71,22 +67,16 @@ namespace Background
             for (int i = 0; i < backgrounds.Length; i++)
             {
                 if (i == 0)
-                {
                     backgrounds[i].transform.position = new Vector2(0, 0);
-                }
                 else
-                {
                     backgrounds[i].transform.position = new Vector2(0, backgrounds[i - 1].transform.position.y + BackgroundSize(backgrounds).y);
-                }
             }
         }
 
-        private void InitiateBackgrounds(GameObject prefabLayers, GameObject layers, GameObject[] backgrounds)
+        private void InitiateBackgrounds(GameObject prefabLayers, GameObject layersToPass, GameObject[] backgrounds)
         {
-            for (int i = 0; i < quantity; i++)
-            {
-                backgrounds[i] = Instantiate(prefabLayers, layers.transform);
-            }
+            for (int i = 0; i < quantity; i++) 
+                backgrounds[i] = Instantiate(prefabLayers, layersToPass.transform);
         }
     }
 }

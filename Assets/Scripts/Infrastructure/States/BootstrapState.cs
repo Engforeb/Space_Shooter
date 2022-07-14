@@ -1,6 +1,7 @@
 ﻿using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Services;
+using Infrastructure.Services.PersistentProgress;
 namespace Infrastructure.States
 {
     public class BootstrapState : IState
@@ -27,6 +28,7 @@ namespace Infrastructure.States
         private void RegisterServices()
         {
             _services.RegisterSingle<IAssets>(new AssetProvider());
+            _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
         }
         public void Exit()
