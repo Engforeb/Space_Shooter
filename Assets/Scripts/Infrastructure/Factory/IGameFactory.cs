@@ -1,5 +1,4 @@
-﻿using System;
-using Infrastructure.Services;
+﻿using Infrastructure.Services;
 using UnityEngine;
 namespace Infrastructure.Factory
 {
@@ -7,7 +6,7 @@ namespace Infrastructure.Factory
     {
         GameObject CreatePlayer();
         GameObject CreatePlayer(GameObject at);
-        void CreateSpawnManager();
-        void CreateHud();
+        SpawnManager CreateSpawnManager();
+        void CreateHud(SpawnManager spawnManager, string sceneName);
     }
 }

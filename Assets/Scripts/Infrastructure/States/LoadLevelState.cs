@@ -9,6 +9,8 @@ namespace Infrastructure.States
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         
+        private string _sceneName;
+        
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory)
         {
             _stateMachine = stateMachine;
@@ -20,6 +22,7 @@ namespace Infrastructure.States
         public void Enter(string sceneName)
         {
             _curtain.Show();
+            _sceneName = sceneName;
             _sceneLoader.Load(sceneName, OnLoaded);
         }
         
@@ -29,9 +32,9 @@ namespace Infrastructure.States
         private void OnLoaded()
         {
             _gameFactory.CreatePlayer();
-            _gameFactory.CreateSpawnManager();
-            _gameFactory.CreateHud();
-            
+            var spawnManager = _gameFactory.CreateSpawnManager();
+            _gameFactory.CreateHud(spawnManager, _sceneName);
+
             _stateMachine.Enter<GameLoopState>();
         }
     }

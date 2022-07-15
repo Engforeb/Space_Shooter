@@ -1,4 +1,5 @@
-﻿using Infrastructure.AssetManagement;
+﻿using HUD;
+using Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Infrastructure.Factory
@@ -17,11 +18,15 @@ namespace Infrastructure.Factory
         public GameObject CreatePlayer(GameObject at) =>
             _assets.Instantiate(AssetPaths.PlayerPath, at.transform.position);
 
-        public void CreateSpawnManager() =>
-            _assets.Instantiate(AssetPaths.SpawnManagerPath);
+        public SpawnManager CreateSpawnManager() => 
+            _assets.Instantiate(AssetPaths.SpawnManagerPath).GetComponent<SpawnManager>();
 
-        public void CreateHud() => 
-            _assets.Instantiate(AssetPaths.HudPath);
+        public void CreateHud(SpawnManager spawnManager, string sceneName)
+        {
+            var hudGO = _assets.Instantiate(AssetPaths.HudPath);
+            var hud = hudGO.GetComponent<HudData>();
+            hud.Init(spawnManager, sceneName);
+        }
     }
 
 }
