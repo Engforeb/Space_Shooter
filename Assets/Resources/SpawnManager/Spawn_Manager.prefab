@@ -529,7 +529,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607089677707964}
   maneuvering: {fileID: 7071607088993564505}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088174837232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,7 +1699,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088395364403}
   maneuvering: {fileID: 7071607090221757864}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088255467419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,7 +1928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 013178eece863154b9691d75e6fe9935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawners:
+  spawners:
   - {fileID: 7071607088573270701}
   - {fileID: 7071607089634165862}
   - {fileID: 7071607089343012388}
@@ -3063,7 +3061,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088674176190}
   maneuvering: {fileID: 7071607089569040572}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088395364403
 GameObject:
   m_ObjectHideFlags: 0
@@ -3595,7 +3592,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088826178288}
   maneuvering: {fileID: 7071607089065470587}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088467270160
 GameObject:
   m_ObjectHideFlags: 0
@@ -4038,7 +4034,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607089200757877}
   maneuvering: {fileID: 7071607088144791396}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088478712199
 GameObject:
   m_ObjectHideFlags: 0
@@ -5226,7 +5221,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088210534234}
   maneuvering: {fileID: 7071607089318748344}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088588853339
 GameObject:
   m_ObjectHideFlags: 0
@@ -5720,7 +5714,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088216399771}
   maneuvering: {fileID: 7071607089416943679}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088644871724
 GameObject:
   m_ObjectHideFlags: 0
@@ -5965,7 +5958,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607089582842838}
   maneuvering: {fileID: 7071607088193747455}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607088666754311
 GameObject:
   m_ObjectHideFlags: 0
@@ -10183,7 +10175,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088593522709}
   maneuvering: {fileID: 7071607088542425442}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607089085751550
 GameObject:
   m_ObjectHideFlags: 0
@@ -10248,7 +10239,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607090242857734}
   maneuvering: {fileID: 7071607089868286293}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607089087685801
 GameObject:
   m_ObjectHideFlags: 0
@@ -12445,7 +12435,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088644871724}
   maneuvering: {fileID: 7071607088992121255}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607089290572129
 GameObject:
   m_ObjectHideFlags: 0
@@ -13231,7 +13220,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607089714031373}
   maneuvering: {fileID: 7071607088295351960}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607089356260554
 GameObject:
   m_ObjectHideFlags: 0
@@ -15909,7 +15897,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088719867713}
   maneuvering: {fileID: 7071607089087685801}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607089635904065
 GameObject:
   m_ObjectHideFlags: 0
@@ -19445,7 +19432,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607089899552224}
   maneuvering: {fileID: 7071607088562594404}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607089949305083
 GameObject:
   m_ObjectHideFlags: 0
@@ -20465,7 +20451,6 @@ MonoBehaviour:
   timeToGetToPosition: 0.5
   positions: {fileID: 7071607088683024172}
   maneuvering: {fileID: 7071607088467270160}
-  backgroundCompositor: {fileID: 0}
 --- !u!1 &7071607090098156940
 GameObject:
   m_ObjectHideFlags: 0
