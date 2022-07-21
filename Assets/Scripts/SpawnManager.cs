@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Data;
 using Enemy;
+using Infrastructure.Services;
 using Infrastructure.Services.PersistentProgress;
+using Infrastructure.Services.SaveLoad;
+using Logic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,12 +13,17 @@ public class SpawnManager : MonoBehaviour, ISavedProgress
 {
     public event Action<int> WaveChanged;
     
-    public int Wave { get; set; }
+    public int Wave { get => _wave; set => _wave = value; }
     
     [SerializeField] private Spawner[] spawners;
 
+    private int _wave;
+
+    private ISavedLoadService _savedLoadService;
+
     private void Start()
     {
+        _savedLoadService = AllServices.Container.Single<ISavedLoadService>();
         StartCoroutine(SpawnerEnumerator());
     }
 
@@ -24,20 +31,22 @@ public class SpawnManager : MonoBehaviour, ISavedProgress
     {
         while(true)
         {
-            for (int i = 0; i < spawners.Length; i++)
+            for (int i = _wave; i < spawners.Length; i++)
             {
                 spawners[i].gameObject.SetActive(true);
                 WaveChanged?.Invoke(spawners[i].ID);
+                _wave = i;
+                _savedLoadService.SaveProgress();
                 yield return new WaitUntil(() => spawners[i].gameObject.activeSelf == false);
             }
         }
     }
     public void UpdateProgress(PlayerProgress progress) => 
-        progress.worldData.waveToLoad = Wave;
+        progress.worldData.waveToLoad = _wave;
     
     public void LoadProgress(PlayerProgress progress)
     {
         if (SceneManager.GetActiveScene().name == progress.worldData.levelToLoad) 
-            Wave = progress.worldData.waveToLoad;
+            _wave = progress.worldData.waveToLoad;
     }
 }

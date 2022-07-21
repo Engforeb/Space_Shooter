@@ -15,10 +15,10 @@ namespace Player
         
         [SerializeField] private GameObject megaExplosion;
         [SerializeField] private int health;
-        [SerializeField] private CameraShake cameraShake;
         [SerializeField] private SpriteRenderer spriteRenderer;
 
         private bool _explosionStarted;
+        private CameraShake _cameraShake;
 
         private void Awake()
         {
@@ -29,6 +29,7 @@ namespace Player
 
         private void OnEnable()
         {
+            _cameraShake = FindObjectOfType<CameraShake>();
             _explosionStarted = false;
         }
 
@@ -39,7 +40,7 @@ namespace Player
                 Damage(1);
                 if (health < 1)
                 {
-                    StartCoroutine(cameraShake.Shake(1, 0.1f));
+                    StartCoroutine(_cameraShake.Shake(1, 0.1f));
                     if (!_explosionStarted)
                     {
                         _explosionStarted = true;
@@ -55,7 +56,7 @@ namespace Player
         public void Damage(int amount)
         {
             health -= amount;
-            StartCoroutine(cameraShake.Shake(0.2f, 0.05f));
+            StartCoroutine(_cameraShake.Shake(0.2f, 0.05f));
             OnDamage?.Invoke();
         }
     }
