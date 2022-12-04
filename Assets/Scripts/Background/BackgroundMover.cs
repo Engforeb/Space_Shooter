@@ -12,10 +12,9 @@ namespace Background
         private GameObject[] _mySiblingsAndI;
         private float _backgroundSizeYOffset;
 
-        private void Awake()
+        public void Init(BackgroundCompositor backgroundCompositor)
         {
-            _backgroundCompositor = FindObjectOfType<BackgroundCompositor>();
-            
+            _backgroundCompositor = backgroundCompositor;
         }
 
         private void Start()

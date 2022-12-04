@@ -75,8 +75,11 @@ namespace Background
 
         private void InitiateBackgrounds(GameObject prefabLayers, GameObject layersToPass, GameObject[] backgrounds)
         {
-            for (int i = 0; i < quantity; i++) 
+            for (int i = 0; i < quantity; i++)
+            {
                 backgrounds[i] = Instantiate(prefabLayers, layersToPass.transform);
+                backgrounds[i].GetComponent<BackgroundMover>().Init(this);
+            }
         }
     }
 }
