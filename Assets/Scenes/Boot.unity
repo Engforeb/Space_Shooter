@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7937950daa108047b1ece43a6e063f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Curtain: {fileID: 1161342554}
+  curtain: {fileID: 1161342554}
 --- !u!4 &1079930426
 Transform:
   m_ObjectHideFlags: 0

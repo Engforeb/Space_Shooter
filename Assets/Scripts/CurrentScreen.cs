@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using System;
+using Interfaces;
 using UnityEngine;
 
 public class CurrentScreen : MonoBehaviour, IGetSizeable
@@ -12,6 +13,10 @@ public class CurrentScreen : MonoBehaviour, IGetSizeable
     private void Awake()
     {
         _camera = Camera.main;
+    }
+
+    private void Start()
+    {
         _screenBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
         Width = _screenBounds.x;
         Height = _screenBounds.y;

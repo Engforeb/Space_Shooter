@@ -10,10 +10,12 @@ namespace Background
         private SpriteRenderer _spriteRenderer;
         private float _myHeight;
         private GameObject[] _mySiblingsAndI;
+        private float _backgroundSizeYOffset;
 
         private void Awake()
         {
             _backgroundCompositor = FindObjectOfType<BackgroundCompositor>();
+            
         }
 
         private void Start()
@@ -22,6 +24,7 @@ namespace Background
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _myHeight = _spriteRenderer.bounds.size.y;
             _mySiblingsAndI = GameObject.FindGameObjectsWithTag(myTag);
+            _backgroundSizeYOffset = _backgroundCompositor.BackgroundSize(_mySiblingsAndI).y;
         }
         protected void LateUpdate()
         {
@@ -42,7 +45,7 @@ namespace Background
                 if (backgrounds[i].transform.position.y > highestY) 
                     highestY = backgrounds[i].transform.position.y;
             }
-            return highestY + _backgroundCompositor.BackgroundSize(backgrounds).y;
+            return highestY + _backgroundSizeYOffset;
         }
     }
 }
