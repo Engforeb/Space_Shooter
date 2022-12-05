@@ -5,61 +5,89 @@ namespace Background
 {
     public class BackgroundCompositor : MonoBehaviour
     {
-        public int Quantity => quantity;
         public float ResizeFactor { get; private set; }
 
-        [SerializeField] private int quantity;
-        [SerializeField] private GameObject[] layers;
-        [SerializeField] private GameObject[] layerParents; 
+        [SerializeField] private int backgroundsInLayer;
+        [SerializeField] private GameObject[] layerPrefabs;
+        [SerializeField] private GameObject[] layerParents;
     
-        private static GameObject[] _sky;
-        private static GameObject[] _stars;
-        private static GameObject[] _meteors;
-        private static GameObject[] _planets;
+        private GameObject[] _sky;
+        private GameObject[] _stars;
+        private GameObject[] _meteors;
+        private GameObject[] _planets;
 
-        private Dictionary<int, GameObject[]> _layerNumber;
+        private Dictionary<int, GameObject[]> _layerByIndex;
+        private Camera _camera;
+        private float _backgroundsHeight;
+        private float _screenHeight;
+        private float _screenWidth;
+        private float _offset;
 
-        private void Start() => 
-            ArrangeBackgrounds();
-
-        private void ArrangeBackgrounds()
+        private void Awake()
         {
-            _sky = new GameObject[quantity];
-            _stars = new GameObject[quantity];
-            _meteors = new GameObject[quantity];
-            _planets = new GameObject[quantity];
-
-            _layerNumber = new Dictionary<int, GameObject[]>()
-            {
-                {0, _sky},
-                {1, _stars},
-                {2, _meteors},
-                {3, _planets}
-            };
-
-            for (int i = 0; i < layers.Length; i++)
-            {
-                InitiateBackgrounds(layers[i], layerParents[i], _layerNumber[i]);
-                GetBackgroundsToStartPosition(_layerNumber[i]);
-            }
+            _camera = Camera.main;
+            var screenAdjustmentData = ScreenAdjustmentData();
+            _backgroundsHeight = screenAdjustmentData.BackgroundsHeight;
+            _offset = screenAdjustmentData.Offset;
         }
 
-        public Vector2 BackgroundSize(GameObject[] backgrounds)
+        private void Start()
         {
-            if (Camera.main is null) return default;
-            
-            var worldScreenHeight = Camera.main.orthographicSize * 2;
-            var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
+            InitializeBackgrounds();
+        }
 
-            SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
+        private void InitializeBackgrounds()
+        {
+            CreateBackgroundObjects();
+            InstantiateAndArrangeBackgrounds();
+        }
+        private void InstantiateAndArrangeBackgrounds()
+        {
+            for (int i = 0; i < layerPrefabs.Length; i++)
+            {
+                InitiateBackgrounds(layerPrefabs[i], layerParents[i], _layerByIndex[i]);
+                GetBackgroundsToStartPosition(_layerByIndex[i]);
+            }
+        }
+        private void CreateBackgroundObjects()
+        {
+            _sky = new GameObject[backgroundsInLayer];
+            _stars = new GameObject[backgroundsInLayer];
+            _meteors = new GameObject[backgroundsInLayer];
+            _planets = new GameObject[backgroundsInLayer];
+
+            _layerByIndex = new Dictionary<int, GameObject[]>()
+            {
+                { 0, _sky },
+                { 1, _stars },
+                { 2, _meteors },
+                { 3, _planets }
+            };
+        }
+
+        private (float BackgroundsHeight, float Offset) ScreenAdjustmentData()
+        {
+            _screenHeight = _camera.orthographicSize * 2;
+            _screenWidth = _screenHeight / Screen.height * Screen.width;
+        
+            SpriteRenderer spriteRenderer = layerPrefabs[0].GetComponent<SpriteRenderer>();
             Sprite sprite = spriteRenderer.sprite;
-            ResizeFactor = worldScreenWidth / sprite.bounds.size.x;
+            
+            ResizeFactor = _screenWidth / sprite.bounds.size.x;
+            var backgroundsHeight = spriteRenderer.bounds.size.y * ResizeFactor;
+            var offset = (_screenHeight - _backgroundsHeight) * 0.5f;
 
-            foreach (var background in backgrounds) 
-                background.transform.localScale = new Vector3(ResizeFactor * 1.05f, ResizeFactor * 1.05f, 1);
+            return (backgroundsHeight, offset);
+        }
 
-            var bounds = spriteRenderer.bounds;
-            return new Vector2(bounds.size.x, bounds.size.y);
+        private void InitiateBackgrounds(GameObject prefabLayers, GameObject layersToPass, GameObject[] backgrounds)
+        {
+            for (int i = 0; i < backgroundsInLayer; i++)
+            {
+                backgrounds[i] = Instantiate(prefabLayers, layersToPass.transform);
+                backgrounds[i].GetComponent<BackgroundMover>().Init(_backgroundsHeight, _offset);
+                backgrounds[i].GetComponent<BackgroundResizer>().Init(ResizeFactor);
+            }
         }
 
         private void GetBackgroundsToStartPosition(GameObject[] backgrounds)
@@ -67,19 +95,11 @@ namespace Background
             for (int i = 0; i < backgrounds.Length; i++)
             {
                 if (i == 0)
-                    backgrounds[i].transform.position = new Vector2(0, 0);
+                    backgrounds[i].transform.position = new Vector2(0, -_offset);
                 else
-                    backgrounds[i].transform.position = new Vector2(0, backgrounds[i - 1].transform.position.y + BackgroundSize(backgrounds).y);
+                    backgrounds[i].transform.position = new Vector2(0, backgrounds[i - 1].transform.position.y + _backgroundsHeight);
             }
         }
 
-        private void InitiateBackgrounds(GameObject prefabLayers, GameObject layersToPass, GameObject[] backgrounds)
-        {
-            for (int i = 0; i < quantity; i++)
-            {
-                backgrounds[i] = Instantiate(prefabLayers, layersToPass.transform);
-                backgrounds[i].GetComponent<BackgroundMover>().Init(this);
-            }
-        }
     }
 }

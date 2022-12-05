@@ -560,8 +560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2eb84e334cf2314f9df729f8bc9b5d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quantity: 3
-  layers:
+  backgroundsInLayer: 3
+  layerPrefabs:
   - {fileID: 1745972634859916825, guid: f45bca67bd610564c8ab94c8d9c88367, type: 3}
   - {fileID: 5111748057259917787, guid: 4681acce0b29d854d9897484fd21a6c5, type: 3}
   - {fileID: 9040793348833362046, guid: ba057eb4e368aec41a92ef7c94798912, type: 3}
