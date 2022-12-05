@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 namespace Background
 {
-    public class BackgroundResizer : MonoBehaviour
+    public class BackgroundResizer : MonoBehaviour, IResizable
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        public void Init(float resizeFactor) => 
-            BackgroundResize(resizeFactor);
-
-        private void BackgroundResize(float resizeFactor)
+        public void Resize(float resizeFactor)
         {
             var mTransform = transform;
             

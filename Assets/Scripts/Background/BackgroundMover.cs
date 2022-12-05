@@ -2,7 +2,7 @@
 
 namespace Background
 {
-    public class BackgroundMover : MonoBehaviour
+    public class BackgroundMover : MonoBehaviour, IMoveUppable
     {
         [SerializeField] protected float backgroundSpeed = 0.5f;
         
@@ -18,15 +18,21 @@ namespace Background
             _offset = offset;
         }
         
-        protected void LateUpdate()
+        protected void Update()
+        {
+            Move();
+            if (!(transform.position.y <= - (_myHeight + _offset))) return;
+            MoveUp();
+        }
+        public void MoveUp()
+        {
+            var moveUpY = _myHeight * 2 - _offset - _gapCrutch;
+            transform.position = new Vector2(0, moveUpY);
+        }
+        public void Move()
         {
             Transform transform1 = transform;
             transform1.position += -transform1.up * (Time.deltaTime * backgroundSpeed);
-
-            if (!(transform.position.y <= - (_myHeight + _offset))) return;
-            
-            var moveUpY = _myHeight * 2 - _offset - _gapCrutch;
-            transform.position = new Vector2(0, moveUpY);
         }
     }
 }

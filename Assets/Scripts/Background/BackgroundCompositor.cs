@@ -75,7 +75,7 @@ namespace Background
             
             ResizeFactor = _screenWidth / sprite.bounds.size.x;
             var backgroundsHeight = spriteRenderer.bounds.size.y * ResizeFactor;
-            var offset = (_screenHeight - _backgroundsHeight) * 0.5f;
+            var offset = (_screenHeight - backgroundsHeight) * 0.5f;
 
             return (backgroundsHeight, offset);
         }
@@ -85,8 +85,8 @@ namespace Background
             for (int i = 0; i < backgroundsInLayer; i++)
             {
                 backgrounds[i] = Instantiate(prefabLayers, layersToPass.transform);
-                backgrounds[i].GetComponent<BackgroundMover>().Init(_backgroundsHeight, _offset);
-                backgrounds[i].GetComponent<BackgroundResizer>().Init(ResizeFactor);
+                backgrounds[i].GetComponent<IMoveUppable>().Init(_backgroundsHeight, _offset);
+                backgrounds[i].GetComponent<IResizable>().Resize(ResizeFactor);
             }
         }
 
