@@ -2,7 +2,7 @@
 {
     public interface IMoveUppable
     {
-        public void Init(float backgroundHeight, float offset);
+        public void Init();
         public void Move();
         public void MoveUp();
     }

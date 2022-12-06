@@ -1,12 +1,20 @@
-﻿using UnityEngine;
+﻿using Background.Infrastructure.States;
+using Infrastructure.Services;
+using UnityEngine;
 namespace Background
 {
     public class BackgroundResizer : MonoBehaviour, IResizable
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        public void Resize(float resizeFactor)
+        private IScreenAdjustable _screenAdjustableService;
+
+        public void Resize()
         {
+            _screenAdjustableService = AllServices.Container.Single<IScreenAdjustable>();
+
+            float resizeFactor = _screenAdjustableService.ResizeFactor;
+            
             var mTransform = transform;
             
             var localScale = mTransform.localScale;

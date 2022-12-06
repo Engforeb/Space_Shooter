@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using Background;
+using Background.Infrastructure.States;
 using DG.Tweening;
+using Infrastructure.Services;
+using UnityEditor.Toolbars;
 using UnityEngine;
 
 namespace Enemy
@@ -29,19 +32,23 @@ namespace Enemy
         private Vector3 _initialScale;
         private Vector3 _initialPosition;
 
+        private IScreenAdjustable _screenAdjuster;
+
         private void OnEnable()
         {
+            _screenAdjuster = AllServices.Container.Single<IScreenAdjustable>();
+            
             _backgroundCompositor = FindObjectOfType<BackgroundCompositor>();
             
             var localScale = positions.transform.localScale;
             _initialScale = localScale;
-            localScale *= _backgroundCompositor.ResizeFactor;
+            localScale *= _screenAdjuster.ResizeFactor;
             positions.transform.localScale = localScale;
 
             var transform1 = transform;
             var position = transform1.position;
             _initialPosition = position;
-            position = new Vector3(0, position.y / _backgroundCompositor.ResizeFactor, 0);
+            position = new Vector3(0, position.y / _screenAdjuster.ResizeFactor, 0);
             transform1.position = position;
 
             StartCoroutine(GetShipsInPlace(shipPrefab));

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curtain: {fileID: 1161342554}
+  spriteRenderer: {fileID: 1745972634859916820, guid: f45bca67bd610564c8ab94c8d9c88367, type: 3}
 --- !u!4 &1079930426
 Transform:
   m_ObjectHideFlags: 0

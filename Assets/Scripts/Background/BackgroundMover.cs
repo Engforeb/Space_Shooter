@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Background.Infrastructure.States;
+using Infrastructure.Services;
+using UnityEngine;
 
 namespace Background
 {
@@ -12,10 +14,14 @@ namespace Background
         private float _offset;
         private readonly float _gapCrutch = 0.1f;
 
-        public void Init(float backgroundHeight, float offset)
+        private IScreenAdjustable _screenAdjuster;
+
+        public void Init()
         {
-            _myHeight = backgroundHeight;
-            _offset = offset;
+            _screenAdjuster = AllServices.Container.Single<IScreenAdjustable>();
+            
+            _myHeight = _screenAdjuster.BackgroundsHeight;
+            _offset = _screenAdjuster.VerticalOffset;
         }
         
         protected void Update()

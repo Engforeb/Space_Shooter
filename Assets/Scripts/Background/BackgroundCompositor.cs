@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using Background.Infrastructure.States;
+using Infrastructure.Services;
 using UnityEngine;
 
 namespace Background
 {
     public class BackgroundCompositor : MonoBehaviour
     {
-        public float ResizeFactor { get; private set; }
+        //public float ResizeFactor { get; private set; }
 
         [SerializeField] private int backgroundsInLayer;
         [SerializeField] private GameObject[] layerPrefabs;
@@ -23,12 +25,14 @@ namespace Background
         private float _screenWidth;
         private float _offset;
 
+        private IScreenAdjustable _screenAdjustable;
+
         private void Awake()
         {
             _camera = Camera.main;
-            var screenAdjustmentData = ScreenAdjustmentData();
-            _backgroundsHeight = screenAdjustmentData.BackgroundsHeight;
-            _offset = screenAdjustmentData.Offset;
+            _screenAdjustable = AllServices.Container.Single<IScreenAdjustable>();
+            _backgroundsHeight = _screenAdjustable.BackgroundsHeight;
+            _offset = _screenAdjustable.VerticalOffset;
         }
 
         private void Start()
@@ -65,28 +69,28 @@ namespace Background
             };
         }
 
-        private (float BackgroundsHeight, float Offset) ScreenAdjustmentData()
-        {
-            _screenHeight = _camera.orthographicSize * 2;
-            _screenWidth = _screenHeight / Screen.height * Screen.width;
-        
-            SpriteRenderer spriteRenderer = layerPrefabs[0].GetComponent<SpriteRenderer>();
-            Sprite sprite = spriteRenderer.sprite;
-            
-            ResizeFactor = _screenWidth / sprite.bounds.size.x;
-            var backgroundsHeight = spriteRenderer.bounds.size.y * ResizeFactor;
-            var offset = (_screenHeight - backgroundsHeight) * 0.5f;
-
-            return (backgroundsHeight, offset);
-        }
+        // private (float BackgroundsHeight, float Offset) ScreenAdjustmentData()
+        // {
+        //     _screenHeight = _camera.orthographicSize * 2;
+        //     _screenWidth = _screenHeight / Screen.height * Screen.width;
+        //
+        //     SpriteRenderer spriteRenderer = layerPrefabs[0].GetComponent<SpriteRenderer>();
+        //     Sprite sprite = spriteRenderer.sprite;
+        //     
+        //     ResizeFactor = _screenWidth / sprite.bounds.size.x;
+        //     var backgroundsHeight = spriteRenderer.bounds.size.y * ResizeFactor;
+        //     var offset = (_screenHeight - backgroundsHeight) * 0.5f;
+        //
+        //     return (backgroundsHeight, offset);
+        // }
 
         private void InitiateBackgrounds(GameObject prefabLayers, GameObject layersToPass, GameObject[] backgrounds)
         {
             for (int i = 0; i < backgroundsInLayer; i++)
             {
                 backgrounds[i] = Instantiate(prefabLayers, layersToPass.transform);
-                backgrounds[i].GetComponent<IMoveUppable>().Init(_backgroundsHeight, _offset);
-                backgrounds[i].GetComponent<IResizable>().Resize(ResizeFactor);
+                backgrounds[i].GetComponent<IMoveUppable>().Init();
+                backgrounds[i].GetComponent<IResizable>().Resize();
             }
         }
 
@@ -100,6 +104,5 @@ namespace Background
                     backgrounds[i].transform.position = new Vector2(0, backgrounds[i - 1].transform.position.y + _backgroundsHeight);
             }
         }
-
     }
 }
