@@ -20,7 +20,6 @@ public class Bullet : MonoBehaviour, IAmmo
 
     private void Awake()
     {
-        ammoPool = FindObjectOfType<AmmoPool>().transform;
         _targetHit = false;
     }
     private void OnEnable()
@@ -70,7 +69,6 @@ public class Bullet : MonoBehaviour, IAmmo
     private IEnumerator WaitAndDeactivate()
     {
         yield return _secondsBeforeDestroy;
-        gameObject.transform.SetParent(ammoPool);
         gameObject.SetActive(false);
     }
 }

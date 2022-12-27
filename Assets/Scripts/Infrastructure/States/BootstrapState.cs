@@ -15,13 +15,18 @@ namespace Infrastructure.States
         private readonly AllServices _services;
         private Camera _camera;
         private SpriteRenderer _spriteRenderer;
-        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services, Camera camera, SpriteRenderer spriteRenderer)
+        private Transform _bulletParent;
+        private int _bulletPoolCapacity;
+        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services, 
+            Camera camera, SpriteRenderer spriteRenderer, Transform bulletParent, int bulletPoolCapacity)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
             _camera = camera;
             _spriteRenderer = spriteRenderer;
+            _bulletParent = bulletParent;
+            _bulletPoolCapacity = bulletPoolCapacity;
 
             RegisterServices();
         }
@@ -39,6 +44,7 @@ namespace Infrastructure.States
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
             _services.RegisterSingle<ISavedLoadService>(new SavedLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
+            _services.RegisterSingle<IPool>(new BulletPool(_services.Single<IGameFactory>(), _bulletParent, _bulletPoolCapacity));
         }
         public void Exit()
         {

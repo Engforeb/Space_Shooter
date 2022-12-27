@@ -18,14 +18,25 @@ namespace Infrastructure.Factory
             _assets = assets;
         }
         
-        public GameObject CreatePlayer() =>
-            _assets.Instantiate(AssetPaths.PlayerPath);
+        public GameObject CreatePlayer()
+        {
+            return _assets.Instantiate(AssetPaths.PlayerPath);
+        }
 
-        public GameObject CreatePlayer(GameObject at) =>
-            _assets.Instantiate(AssetPaths.PlayerPath, at.transform.position);
+        public GameObject CreatePlayer(GameObject at)
+        {
+            return _assets.Instantiate(AssetPaths.PlayerPath, at.transform.position);
+        }
 
-        public SpawnManager CreateSpawnManager() => 
-            InstantiateRegistered(AssetPaths.SpawnManagerPath);
+        public SpawnManager CreateSpawnManager()
+        {
+            return InstantiateRegistered(AssetPaths.SpawnManagerPath);
+        }
+
+        public GameObject CreateBullet()
+        {
+            return _assets.Instantiate(AssetPaths.BulletPath);
+        }
 
         public void CreateHud(SpawnManager spawnManager, string sceneName)
         {

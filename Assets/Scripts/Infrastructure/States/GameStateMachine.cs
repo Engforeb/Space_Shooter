@@ -13,11 +13,12 @@ namespace Infrastructure.States
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain, AllServices services, Camera camera, SpriteRenderer spriteRenderer)
+        public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain, AllServices services, 
+            Camera camera, SpriteRenderer spriteRenderer, Transform bulletParent, int bulletPoolCapacity)
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, camera, spriteRenderer),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, camera, spriteRenderer, bulletParent, bulletPoolCapacity),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>()),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISavedLoadService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this)

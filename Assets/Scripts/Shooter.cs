@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Infrastructure.Services;
 using Interfaces;
 using UnityEngine;
 
@@ -13,10 +14,12 @@ public class Shooter : MonoBehaviour, IShootable
     private WaitForSeconds _fireRateYield;
 
     private IAmmo _ammo;
+    private IPool _pool;
 
     private void Start()
     {
         _fireRateYield = new WaitForSeconds(_fireRate);
+        _pool = AllServices.Container.Single<IPool>();
     }
 
     private void OnEnable()
@@ -36,7 +39,8 @@ public class Shooter : MonoBehaviour, IShootable
             _muzzleFlashParticles.Play();
             _audio.Play();
 
-            GameObject bullet = AmmoPool.Instance.AmmoRequest();
+            GameObject bullet = _pool.Request();
+            
             bullet.transform.position = _socket.transform.position;
             bullet.transform.rotation = _socket.transform.rotation;
 

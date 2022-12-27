@@ -7,9 +7,11 @@ namespace Infrastructure
     public class Game
     {
         public readonly GameStateMachine StateMachine;
-        public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain, Camera camera, SpriteRenderer spriteRenderer)
+        public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain, Camera camera, 
+            SpriteRenderer spriteRenderer, Transform bulletParent, int bulletPoolCapacity)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, AllServices.Container, camera, spriteRenderer);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), curtain, AllServices.Container, 
+                camera, spriteRenderer, bulletParent, bulletPoolCapacity);
         }
     }
 }
