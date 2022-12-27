@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour, IShootable
 {
-    [SerializeField] private Transform _socket;
-    [SerializeField] private AudioSource _audio;
-    [SerializeField] private ParticleSystem _muzzleFlashParticles;
+    [SerializeField] private Transform socket;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private ParticleSystem muzzleFlashParticles;
 
-    [Range(0, 1)] [SerializeField] private float _fireRate;
+    [Range(0, 1)] [SerializeField] private float fireRate;
 
     private WaitForSeconds _fireRateYield;
 
@@ -18,13 +18,13 @@ public class Shooter : MonoBehaviour, IShootable
 
     private void Start()
     {
-        _fireRateYield = new WaitForSeconds(_fireRate);
+        _fireRateYield = new WaitForSeconds(fireRate);
         _pool = AllServices.Container.Single<IPool>();
     }
 
     private void OnEnable()
     {
-        _muzzleFlashParticles.Stop();
+        muzzleFlashParticles.Stop();
     }
 
     public void Shoot()
@@ -36,13 +36,15 @@ public class Shooter : MonoBehaviour, IShootable
     {
         while (Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftControl))
         {
-            _muzzleFlashParticles.Play();
-            _audio.Play();
+            muzzleFlashParticles.Play();
+            audioSource.Play();
 
             GameObject bullet = _pool.Request();
+
+            var myTransform = socket.transform;
             
-            bullet.transform.position = _socket.transform.position;
-            bullet.transform.rotation = _socket.transform.rotation;
+            bullet.transform.position = myTransform.position;
+            bullet.transform.rotation = myTransform.rotation;
 
             yield return _fireRateYield;
         }

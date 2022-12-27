@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Threading.Tasks;
 using Interfaces;
 using UnityEngine;
 
@@ -9,13 +9,12 @@ public class Bullet : MonoBehaviour, IAmmo
     public float Lifetime => lifetime;
     public int Damage => damage;
     
-    public Transform ammoPool;
-
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float lifetime;
     [SerializeField] private int damage;
-    
-    private WaitForSeconds _secondsBeforeDestroy;
+    [SerializeField] private GameObject explosion;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     private bool _targetHit;
 
     private void Awake()
@@ -28,16 +27,11 @@ public class Bullet : MonoBehaviour, IAmmo
         _targetHit = false;
     }
 
-    private void Start()
-    {
-        _secondsBeforeDestroy = new WaitForSeconds(lifetime);
-    }
     private void Update()
     {
         if (_targetHit == false)
         {
             Move();
-            StartCoroutine(WaitAndDeactivate());
         }
     }
 
@@ -47,28 +41,34 @@ public class Bullet : MonoBehaviour, IAmmo
         transform1.position += transform1.up * (Time.deltaTime * bulletSpeed);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private async void OnTriggerEnter2D(Collider2D collision)
     {
         _targetHit = true;
 
         IDamageable obj = collision.GetComponent<IDamageable>();
         if (obj != null)
         {
-            obj.Damage(1);
+            obj.Damage(damage);
             var position = transform.position;
             position = collision.ClosestPoint(position);
             transform.position = position;
 
-            GameObject explosion = BulletExplosionPool.Instance.ExplosionRequest();
+            spriteRenderer.enabled = false;
+            
+            explosion.SetActive(true);
             explosion.transform.position = position;
             explosion.GetComponent<ParticleSystem>().Play();
 
+            await Task.Delay(1000);
+
             gameObject.SetActive(false);
+            
+            spriteRenderer.enabled = true;
         }
     }
-    private IEnumerator WaitAndDeactivate()
+
+    private void OnBecameInvisible()
     {
-        yield return _secondsBeforeDestroy;
         gameObject.SetActive(false);
     }
 }

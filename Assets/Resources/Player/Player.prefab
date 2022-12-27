@@ -109,7 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   megaExplosion: {fileID: 1682620552668852, guid: 00f24abfdf0d75142ad604932304d8c9, type: 3}
   health: 10
-  cameraShake: {fileID: 0}
   spriteRenderer: {fileID: 151090997390460288}
 --- !u!95 &151090997390460292
 Animator:
@@ -416,10 +415,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d302e738f93df41ba5eded8d15202d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _socket: {fileID: 151090998354532067}
-  _audio: {fileID: 151090997390460299}
-  _muzzleFlashParticles: {fileID: 151090998151215571}
-  _fireRate: 0.1
+  socket: {fileID: 151090998354532067}
+  audioSource: {fileID: 151090997390460299}
+  muzzleFlashParticles: {fileID: 151090998151215571}
+  fireRate: 0.1
 --- !u!114 &151090997390460296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,10 +431,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d302e738f93df41ba5eded8d15202d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _socket: {fileID: 151090998752038258}
-  _audio: {fileID: 151090997390460299}
-  _muzzleFlashParticles: {fileID: 151090996833724232}
-  _fireRate: 0.1
+  socket: {fileID: 151090998752038258}
+  audioSource: {fileID: 151090997390460299}
+  muzzleFlashParticles: {fileID: 151090996833724232}
+  fireRate: 0.1
 --- !u!1 &151090998354532092
 GameObject:
   m_ObjectHideFlags: 0
