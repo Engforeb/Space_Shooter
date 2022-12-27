@@ -53,17 +53,13 @@ public class Bullet : MonoBehaviour, IAmmo
             position = collision.ClosestPoint(position);
             transform.position = position;
 
-            spriteRenderer.enabled = false;
-            
             explosion.SetActive(true);
             explosion.transform.position = position;
             explosion.GetComponent<ParticleSystem>().Play();
-
-            await Task.Delay(1000);
+            
+            await Task.Delay(100);
 
             gameObject.SetActive(false);
-            
-            spriteRenderer.enabled = true;
         }
     }
 
