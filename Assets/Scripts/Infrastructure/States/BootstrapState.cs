@@ -14,27 +14,30 @@ namespace Infrastructure.States
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
-        private Camera _camera;
-        private SpriteRenderer _spriteRenderer;
-        private Transform _bulletParent;
-        private int _bulletPoolCapacity;
+        private readonly Camera _camera;
+        private readonly SpriteRenderer _spriteRenderer;
+        private readonly BulletContainer _bulletContainer;
+        private readonly CameraShake _cameraShake;
+
         public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services, 
-            Camera camera, SpriteRenderer spriteRenderer, Transform bulletParent, int bulletPoolCapacity)
+            Camera camera, SpriteRenderer spriteRenderer, BulletContainer bulletContainer, CameraShake cameraShake)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
             _camera = camera;
             _spriteRenderer = spriteRenderer;
-            _bulletParent = bulletParent;
-            _bulletPoolCapacity = bulletPoolCapacity;
+            _bulletContainer = bulletContainer;
+            _cameraShake = cameraShake;
 
             RegisterServices();
         }
+        
         public void Enter()
         {
             _sceneLoader.Load(Boot, onLoaded: EnterLoadLevel);
         }
+        
         private void EnterLoadLevel() => 
             _gameStateMachine.Enter<LoadProgressState>();
         
@@ -43,9 +46,9 @@ namespace Infrastructure.States
             _services.RegisterSingle<IScreenAdjustable>(new ScreenAdjustable(_camera, _spriteRenderer));
             _services.RegisterSingle<IAssets>(new AssetProvider());
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _cameraShake));
             _services.RegisterSingle<ISavedLoadService>(new SavedLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
-            _services.RegisterSingle<IPool>(new BulletPool(_services.Single<IGameFactory>(), _bulletParent, _bulletPoolCapacity));
+            _services.RegisterSingle<IPool>(new BulletPool(_services.Single<IGameFactory>(), _bulletContainer));
         }
         public void Exit()
         {

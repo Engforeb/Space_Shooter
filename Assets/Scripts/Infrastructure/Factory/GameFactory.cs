@@ -12,15 +12,20 @@ namespace Infrastructure.Factory
         public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
 
         private readonly IAssets _assets;
+        private readonly CameraShake _cameraShake;
 
-        public GameFactory(IAssets assets)
+        public GameFactory(IAssets assets, CameraShake cameraShake)
         {
+            _cameraShake = cameraShake;
             _assets = assets;
         }
         
         public GameObject CreatePlayer()
         {
-            return _assets.Instantiate(AssetPaths.PlayerPath);
+            var playerGo = _assets.Instantiate(AssetPaths.PlayerPath);
+            var player = playerGo.GetComponent<Player.Player>();
+            player.Init(_cameraShake);
+            return player.gameObject;
         }
 
         public GameObject CreatePlayer(GameObject at)

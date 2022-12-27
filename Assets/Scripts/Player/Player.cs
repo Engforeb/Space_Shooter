@@ -20,17 +20,14 @@ namespace Player
         private bool _explosionStarted;
         private CameraShake _cameraShake;
 
-        private void Awake()
+        public void Init(CameraShake cameraShake)
         {
             Width = transform.GetComponent<SpriteRenderer>().bounds.size.x;
             Height = transform.GetComponent<SpriteRenderer>().bounds.size.y;
             Animator = GetComponent<Animator>();
-        }
-
-        private void OnEnable()
-        {
-            _cameraShake = FindObjectOfType<CameraShake>();
+            
             _explosionStarted = false;
+            _cameraShake = cameraShake;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

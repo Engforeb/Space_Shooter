@@ -6,14 +6,14 @@ namespace Ammo
     public class BulletPool : IPool
     {
         private readonly IGameFactory _gameFactory;
-        private readonly Transform _parent;
+        private readonly BulletContainer _bulletContainer;
         private readonly int _capacity;
 
-        public BulletPool(IGameFactory gameFactory, Transform parent, int capacity)
+        public BulletPool(IGameFactory gameFactory, BulletContainer bulletContainer)
         {
             _gameFactory = gameFactory;
-            _parent = parent;
-            _capacity = capacity;
+            _bulletContainer = bulletContainer;
+            _capacity = _bulletContainer.Capacity;
             Generate();
         }
 
@@ -36,7 +36,7 @@ namespace Ammo
                     if (ammo.activeInHierarchy == false)
                     {
                         ammo.SetActive(true);
-                        ammo.transform.SetParent(_parent.transform);
+                        ammo.transform.SetParent(_bulletContainer.transform);
                         return ammo;
                     }
                 }
@@ -47,7 +47,7 @@ namespace Ammo
         public GameObject Add()
         {
             GameObject ammo = _gameFactory.CreateBullet();
-            ammo.transform.SetParent(_parent.transform);
+            ammo.transform.SetParent(_bulletContainer.transform);
             ammo.SetActive(false);
             _ammoBatch.Add(ammo);
             return ammo;

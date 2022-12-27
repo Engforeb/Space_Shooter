@@ -7,8 +7,6 @@ namespace Background
 {
     public class BackgroundCompositor : MonoBehaviour
     {
-        //public float ResizeFactor { get; private set; }
-
         [SerializeField] private int backgroundsInLayer;
         [SerializeField] private GameObject[] layerPrefabs;
         [SerializeField] private GameObject[] layerParents;

@@ -9,17 +9,22 @@ namespace Infrastructure
     {
         [SerializeField] private LoadingCurtain curtain;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private Transform bulletParent;
+        [SerializeField] private BulletContainer bulletParent;
 
         private Camera _camera;
-        private int _bulletContainerCapacity;
         
         private Game _game;
+        private CameraShake _cameraShake;
         private void Awake()
         {
             _camera = Camera.main;
-            _bulletContainerCapacity = bulletParent.GetComponent<BulletContainer>().Capacity;
-            _game = new Game(this, curtain, _camera, spriteRenderer, bulletParent, _bulletContainerCapacity);
+            
+            if (_camera != null)
+            {
+                _cameraShake = _camera.GetComponent<CameraShake>();
+
+                _game = new Game(this, curtain, _camera, spriteRenderer, bulletParent, _cameraShake);
+            }
             _game.StateMachine.Enter<BootstrapState>();
             
             DontDestroyOnLoad(this);

@@ -1,8 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CameraShake : MonoBehaviour
 {
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public IEnumerator Shake(float duration, float magnitude)
     {
         Vector3 originalPosition = transform.localPosition;
