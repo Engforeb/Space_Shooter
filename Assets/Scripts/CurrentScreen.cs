@@ -14,7 +14,7 @@ public class CurrentScreen : MonoBehaviour, IGetSizeable
         _camera = Camera.main;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         _screenBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
         Width = _screenBounds.x;

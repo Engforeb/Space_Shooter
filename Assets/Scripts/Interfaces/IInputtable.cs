@@ -2,8 +2,8 @@
 {
     public interface IInputtable
     {
-        float Horizontal { get; }
-        float Vertical { get; }
-        void UserInput();
+        public float Vertical { get; }
+        public float Horizontal { get; }
+        public void UserInput();
     }
 }

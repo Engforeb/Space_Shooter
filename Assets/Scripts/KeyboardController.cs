@@ -6,7 +6,7 @@ public class KeyboardController : MonoBehaviour, IInputtable
     public float Horizontal { get; private set; }
     public float Vertical { get; private set; }
 
-    public float speed;
+    public float speed = 5;
 
     private IShootable[] _shooters;
     
