@@ -5,6 +5,7 @@ using Infrastructure.Factory;
 using Infrastructure.Services;
 using Infrastructure.Services.PersistentProgress;
 using Infrastructure.Services.SaveLoad;
+using InputClasses;
 using UnityEngine;
 namespace Infrastructure.States
 {
@@ -49,6 +50,8 @@ namespace Infrastructure.States
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _cameraShake));
             _services.RegisterSingle<ISavedLoadService>(new SavedLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
             _services.RegisterSingle<IPool>(new BulletPool(_services.Single<IGameFactory>(), _bulletContainer));
+            _services.RegisterSingle<CurrentScreen>(new CurrentScreen(_camera));
+            _services.RegisterSingle<IInput>(new MouseInput());
         }
         public void Exit()
         {

@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Infrastructure.Services;
 namespace InputClasses
 {
-    public interface IInput
+    public interface IInput : IService
     {
         public float Horizontal { get; }
         public float Vertical { get; }

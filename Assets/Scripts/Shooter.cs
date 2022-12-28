@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Ammo;
 using Infrastructure.Services;
+using InputClasses;
 using Interfaces;
 using UnityEngine;
 
@@ -16,26 +17,41 @@ public class Shooter : MonoBehaviour, IShootable
 
     private IAmmo _ammo;
     private IPool _pool;
+    private IInput _iInput;
+    private bool _shootStarted;
 
-    private void Start()
-    {
-        _fireRateYield = new WaitForSeconds(fireRate);
-        _pool = AllServices.Container.Single<IPool>();
-    }
-
-    private void OnEnable()
+    public void Init()
     {
         muzzleFlashParticles.Stop();
+        _fireRateYield = new WaitForSeconds(fireRate);
+        _pool = AllServices.Container.Single<IPool>();
+        _iInput = AllServices.Container.Single<IInput>();
     }
 
     public void Shoot()
     {
-        StartCoroutine(ContinuousShoot());
+        if (_iInput.IsFire && !_shootStarted)
+        {
+            StartCoroutine(ContinuousShoot());
+        }
+        else if (!_iInput.IsFire && _shootStarted)
+        {
+            StopAllCoroutines();
+            _shootStarted = false;
+        }
+    }
+
+    private void Update()
+    {
+        _iInput.UserInput();
+        Shoot();
     }
 
     private IEnumerator ContinuousShoot()
     {
-        while (Input.GetMouseButton(0) || Input.GetKey(KeyCode.LeftControl))
+        _shootStarted = true;
+        
+        while (true)
         {
             muzzleFlashParticles.Play();
             audioSource.Play();

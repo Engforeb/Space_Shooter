@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Infrastructure.Services;
 using InputClasses;
 using Interfaces;
 using UnityEngine;
@@ -7,142 +7,68 @@ namespace Player
 {
     public class Mover : MonoBehaviour, IMovable
     {
-        //[SerializeField] private Controller selectedController = Controller.Mouse;
-        [SerializeField] private float keyboardControllerSpeed;
-        
-        private KeyboardController _keyboardController;
-        
+        [SerializeField] private float keyboardInputSpeed;
+
         private Vector3 _offsetDistance;
         private IGetSizeable _screenBounds;
         private IGetSizeable _gameObjectSize;
         private float _lastYPosition;
+        
         private IAnimatable _animator;
         private static readonly int AnimatorMove = Animator.StringToHash("Move");
+        
         private Camera _camera;
-        private IShootable[] _shooters;
-        
-        private enum Controller
-        {
-            Mouse,
-            Keyboard
-        };
-        
-        private IInputtable _userInput;
-        private IInput _iInput;
-        private float speed = 5; 
 
-        private void Awake()
+        private float _leftBorder;
+        private float _rightBorder;
+        private float _topBorder;
+        private float _bottomBorder;
+        
+        private IInput _iInput;
+
+        public void Init()
         {
             _camera = Camera.main;
-            _iInput = new KeyboardInput();
-            
-        }
 
-        private void Start()
-        {
-            _shooters = GetComponents<IShootable>();
-            _screenBounds = gameObject.AddComponent<CurrentScreen>();
+            _iInput = AllServices.Container.Single<IInput>();
+            
             _gameObjectSize = GetComponent<IGetSizeable>();
             _animator = GetComponent<IAnimatable>();
+
+            var currentScreen = AllServices.Container.Single<CurrentScreen>();
+            var borders = currentScreen.BoundsForObject(_gameObjectSize);
+            
+            _leftBorder = borders.Left;
+            _rightBorder = borders.Right;
+            _topBorder = borders.Top;
+            _bottomBorder = borders.Bottom;
         }
 
-        public void MoveMouse()
+        public void Move()
         {
-            //_userInput.UserInput();
-
-            Vector3 positionWithinScreen = LimitByScreenMouse();
-
+            Vector3 positionWithinScreen = LimitByScreen();
             transform.position = positionWithinScreen;
-        
             ForwardChecker();
         }
 
-        private void MoveKeyboard()
-        {
-            transform.Translate(_iInput.Horizontal * Time.deltaTime * speed, _iInput.Vertical * Time.deltaTime * speed, 0);
-            transform.position = LimitByScreenKeyboard();
-        }
-        
-        private void Init()
-        {
-            // if (selectedController == Controller.Mouse)
-            // {
-            //     gameObject.AddComponent<MouseController>();
-            // }
-            // else if (selectedController == Controller.Keyboard)
-            // {
-            //     _keyboardController = gameObject.AddComponent<KeyboardController>();
-            //     _keyboardController.speed = keyboardControllerSpeed;
-            // }
-            
-            //_userInput = GetComponent<IInputtable>();
-            
-            
-            
-        }
-        
-        // private void Awake()
-        // {
-        //     Init();
-        // }
-
         private void Update()
         {
-            // if (selectedController == Controller.Keyboard)
-            // {
-                 MoveKeyboard();
-            // }
             _iInput.UserInput();
         }
-
+        
         private void OnMouseDrag()
         {
-            // if (selectedController == Controller.Mouse)
-            // {
-                 MoveMouse();
-            // }
+            Move();
         }
 
-        private Vector3 LimitByScreenMouse()
+        private Vector2 LimitByScreen()
         {
-            float limitByX = Mathf.Clamp(MousePositionInWorld().x - _offsetDistance.x,
-                -_screenBounds.Width + _gameObjectSize.Width / 2, _screenBounds.Width - _gameObjectSize.Width / 2);
+            float limitByX = Mathf.Clamp(MousePositionInWorld().x - _offsetDistance.x, _leftBorder, _rightBorder);
+            float limitByY = Mathf.Clamp(MousePositionInWorld().y - _offsetDistance.y, _bottomBorder, _topBorder);
             
-            float limitByY = Mathf.Clamp(MousePositionInWorld().y - _offsetDistance.y,
-                -_screenBounds.Height + _gameObjectSize.Height / 2, _screenBounds.Height - _gameObjectSize.Height / 2);
-            
-            float limitByZ = MousePositionInWorld().z;
-            
-            return new Vector3(limitByX, limitByY, limitByZ);
+            return new Vector3(limitByX, limitByY);
         }
 
-        private Vector2 LimitByScreenKeyboard()
-        {
-            float limitByX = Mathf.Clamp(transform.position.x,
-                -_screenBounds.Width + _gameObjectSize.Width / 2, _screenBounds.Width - _gameObjectSize.Width / 2);
-            float limitByY = Mathf.Clamp(transform.position.y,
-                -_screenBounds.Height + _gameObjectSize.Height / 2, _screenBounds.Height - _gameObjectSize.Height / 2);
-            
-            return new Vector2(limitByX, limitByY);
-        }
-        
-        // private float LimitByX()
-        // {
-        //     return Mathf.Clamp(MousePositionInWorld().x - _offsetDistance.x,
-        //         -_screenBounds.Width + _gameObjectSize.Width / 2, _screenBounds.Width - _gameObjectSize.Width / 2);
-        // }
-        //
-        // private float LimitByY()
-        // {
-        //     return Mathf.Clamp(MousePositionInWorld().y - _offsetDistance.y,
-        //         -_screenBounds.Height + _gameObjectSize.Height / 2, _screenBounds.Height - _gameObjectSize.Height / 2);
-        // }
-        //
-        // private float LimitByZ()
-        // {
-        //     return MousePositionInWorld().z;
-        // }
-        
         private void ForwardChecker()
         {
             float currentPosition = transform.position.y;
@@ -164,13 +90,9 @@ namespace Player
             );
         }
         
-        void OnMouseDown()
+        public void OnMouseDown()
         {
             _offsetDistance = MousePositionInWorld() - transform.position;
-            foreach (var shooter in _shooters)
-            {
-                shooter.Shoot();
-            }
         }
     }
 }

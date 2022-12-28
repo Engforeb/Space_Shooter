@@ -2,6 +2,7 @@
 {
     public interface IShootable
     {
-        void Shoot();
+        public void Init();
+        public void Shoot();
     }
 }

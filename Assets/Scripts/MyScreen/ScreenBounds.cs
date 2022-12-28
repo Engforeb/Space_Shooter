@@ -1,7 +1,10 @@
-﻿public struct ScreenBounds
+﻿namespace MyScreen
 {
-    public float Left;
-    public float Right;
-    public float Top;
-    public float Bottom;
+    public struct ScreenBounds
+    {
+        public float Left;
+        public float Right;
+        public float Top;
+        public float Bottom;
+    }
 }

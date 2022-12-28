@@ -4,6 +4,7 @@ namespace Interfaces
 {
     public interface IMovable
     {
-        void MoveMouse();
+        public void Init();
+        public void Move();
     }
 }

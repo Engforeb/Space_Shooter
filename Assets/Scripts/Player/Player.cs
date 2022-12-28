@@ -19,13 +19,24 @@ namespace Player
 
         private bool _explosionStarted;
         private CameraShake _cameraShake;
+        private IMovable _movable;
+        private IShootable[] _shootables;
 
         public void Init(CameraShake cameraShake)
         {
             Width = transform.GetComponent<SpriteRenderer>().bounds.size.x;
             Height = transform.GetComponent<SpriteRenderer>().bounds.size.y;
             Animator = GetComponent<Animator>();
+
+            GetComponent<IMovable>().Init();
             
+            _shootables = GetComponents<IShootable>();
+            
+            foreach (var shootable in _shootables)
+            {
+                shootable.Init();
+            }
+
             _explosionStarted = false;
             _cameraShake = cameraShake;
         }

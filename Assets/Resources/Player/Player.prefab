@@ -401,8 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bbd567f7c271340b62449dc3baaed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedController: 0
-  keyboardControllerSpeed: 5
+  keyboardInputSpeed: 5
+  selectInput: 1
 --- !u!114 &151090997390460297
 MonoBehaviour:
   m_ObjectHideFlags: 0
