@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CameraClasses;
 using HUD;
 using Infrastructure.AssetManagement;
 using Infrastructure.Services.PersistentProgress;

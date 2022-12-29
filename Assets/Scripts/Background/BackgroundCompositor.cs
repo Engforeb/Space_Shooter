@@ -67,28 +67,13 @@ namespace Background
             };
         }
 
-        // private (float BackgroundsHeight, float Offset) ScreenAdjustmentData()
-        // {
-        //     _screenHeight = _camera.orthographicSize * 2;
-        //     _screenWidth = _screenHeight / Screen.height * Screen.width;
-        //
-        //     SpriteRenderer spriteRenderer = layerPrefabs[0].GetComponent<SpriteRenderer>();
-        //     Sprite sprite = spriteRenderer.sprite;
-        //     
-        //     ResizeFactor = _screenWidth / sprite.bounds.size.x;
-        //     var backgroundsHeight = spriteRenderer.bounds.size.y * ResizeFactor;
-        //     var offset = (_screenHeight - backgroundsHeight) * 0.5f;
-        //
-        //     return (backgroundsHeight, offset);
-        // }
-
         private void InitiateBackgrounds(GameObject prefabLayers, GameObject layersToPass, GameObject[] backgrounds)
         {
             for (int i = 0; i < backgroundsInLayer; i++)
             {
                 backgrounds[i] = Instantiate(prefabLayers, layersToPass.transform);
                 backgrounds[i].GetComponent<IMoveUppable>().Init();
-                backgrounds[i].GetComponent<IResizable>().Resize();
+                //backgrounds[i].GetComponent<IResizable>().Resize();
             }
         }
 

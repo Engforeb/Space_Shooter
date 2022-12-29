@@ -5,6 +5,7 @@ namespace Infrastructure.States
     public class ScreenAdjustable : IScreenAdjustable
     {
         public float BackgroundsHeight { get; private set; }
+        public float BackgroundsWidth { get; private set; }
         public float VerticalOffset { get; private set;}
         public float ResizeFactor { get; private set;}
         
@@ -26,8 +27,12 @@ namespace Infrastructure.States
             Sprite sprite = _spriteRenderer.sprite;
             
             ResizeFactor = screenWidth / sprite.bounds.size.x;
-            BackgroundsHeight = _spriteRenderer.bounds.size.y * ResizeFactor;
+            BackgroundsHeight = _spriteRenderer.bounds.size.y;// * ResizeFactor;
+            BackgroundsWidth = _spriteRenderer.bounds.size.x;
             VerticalOffset = (screenHeight - BackgroundsHeight) * 0.5f;
+            
+            float camSize = BackgroundsWidth * Screen.height / Screen.width * 0.5f;
+            _camera.orthographicSize = camSize;
         }
     }
 }

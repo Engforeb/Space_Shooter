@@ -1,5 +1,6 @@
 ﻿using Ammo;
 using Background.Infrastructure.States;
+using CameraClasses;
 using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Services;
