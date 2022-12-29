@@ -22,8 +22,8 @@ namespace Player
         private CameraShake _cameraShake;
         private IMovable _movable;
         private IShootable[] _shootables;
-
-        public void Init(CameraShake cameraShake)
+        
+        public void Init(CameraShake cameraShake, Camera cam)
         {
             Width = transform.GetComponent<SpriteRenderer>().bounds.size.x;
             Height = transform.GetComponent<SpriteRenderer>().bounds.size.y;
@@ -37,6 +37,9 @@ namespace Player
             {
                 shootable.Init();
             }
+
+            float yPosition = -cam.orthographicSize + Height * 0.5f;
+            transform.position = new Vector2(0, yPosition);
 
             _explosionStarted = false;
             _cameraShake = cameraShake;

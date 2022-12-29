@@ -48,7 +48,7 @@ namespace Infrastructure.States
             _services.RegisterSingle<IScreenAdjustable>(new ScreenAdjustable(_camera, _spriteRenderer));
             _services.RegisterSingle<IAssets>(new AssetProvider());
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _cameraShake));
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _cameraShake, _camera));
             _services.RegisterSingle<ISavedLoadService>(new SavedLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
             _services.RegisterSingle<IPool>(new BulletPool(_services.Single<IGameFactory>(), _bulletContainer));
             _services.RegisterSingle<CurrentScreen>(new CurrentScreen(_camera));

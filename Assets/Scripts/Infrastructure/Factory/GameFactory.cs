@@ -14,18 +14,20 @@ namespace Infrastructure.Factory
 
         private readonly IAssets _assets;
         private readonly CameraShake _cameraShake;
+        private readonly Camera _camera;
 
-        public GameFactory(IAssets assets, CameraShake cameraShake)
+        public GameFactory(IAssets assets, CameraShake cameraShake, Camera cam)
         {
             _cameraShake = cameraShake;
             _assets = assets;
+            _camera = cam;
         }
         
         public GameObject CreatePlayer()
         {
             var playerGo = _assets.Instantiate(AssetPaths.PlayerPath);
             var player = playerGo.GetComponent<Player.Player>();
-            player.Init(_cameraShake);
+            player.Init(_cameraShake, _camera);
             return player.gameObject;
         }
 
