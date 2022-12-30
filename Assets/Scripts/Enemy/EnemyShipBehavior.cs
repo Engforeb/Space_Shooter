@@ -2,7 +2,6 @@
 using Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
-
 namespace Enemy
 {
     public abstract class EnemyShipBehavior : MonoBehaviour, IDamageable
@@ -11,33 +10,34 @@ namespace Enemy
         [SerializeField] private EnemyScriptableObject shipData;
         [SerializeField] private RectTransform healthBar;
         [SerializeField] private GameObject shipExplosion, wounded, whiteSmoke;
-
-        private float _startHealth;
-        private int _woundedValue; 
         private int _damagedValue;
-    
-        private Slider _healthSlider;
-
-        public static event Action OnDestroy;
 
         private bool _dead;
-        private bool _woundedAnim, _smokeAnim;
 
-        private void OnEnable() => 
-            _woundedAnim = false;
+        private Slider _healthSlider;
+
+        private float _startHealth;
+        private bool _woundedAnim, _smokeAnim;
+        private int _woundedValue;
 
         private void Start()
         {
             _woundedValue = shipData.wounded;
             _damagedValue = shipData.damaged;
             _startHealth = currentHealth;
-        
+
             _healthSlider = healthBar.GetComponent<Slider>();
             _healthSlider.value = currentHealth / _startHealth;
 
             wounded.SetActive(false);
             whiteSmoke.SetActive(false);
         }
+
+        private void OnEnable()
+        {
+            _woundedAnim = false;
+        }
+
         public void Damage(int damageAmount)
         {
             if (currentHealth >= 1)
@@ -76,11 +76,13 @@ namespace Enemy
             GameObject explosion = Instantiate(shipExplosion);
             explosion.transform.position = transform.position;
             Destroy(explosion, 1f);
-            
+
             OnDestroy?.Invoke();
 
             _dead = true;
             Destroy(gameObject);
         }
+
+        public static event Action OnDestroy;
     }
 }

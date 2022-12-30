@@ -3,9 +3,8 @@ namespace Ammo
 {
     public class BulletContainer : MonoBehaviour
     {
-        public int Capacity => capacity;
-    
         [SerializeField] private int capacity;
+        public int Capacity => capacity;
 
         private void Awake()
         {

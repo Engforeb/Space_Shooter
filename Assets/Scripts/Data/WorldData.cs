@@ -6,6 +6,7 @@ namespace Data
     {
         public string levelToLoad;
         public int waveToLoad;
+
         public WorldData(string initialLevel)
         {
             levelToLoad = initialLevel;

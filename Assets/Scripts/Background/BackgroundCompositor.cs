@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Infrastructure.Services;
 using UnityEngine;
-
 namespace Background
 {
     public class BackgroundCompositor : MonoBehaviour
@@ -9,25 +8,25 @@ namespace Background
         [SerializeField] private int backgroundsInLayer;
         [SerializeField] private GameObject[] layerPrefabs;
         [SerializeField] private GameObject[] layerParents;
-    
-        private GameObject[] _sky;
-        private GameObject[] _stars;
-        private GameObject[] _meteors;
-        private GameObject[] _planets;
+
+        private IBackgroundAdjuster _backgroundAdjuster;
+        private float _backgroundsHeight;
 
         private Dictionary<int, GameObject[]> _layerByIndex;
-        private float _backgroundsHeight;
+        private GameObject[] _meteors;
+        private float _offset;
+        private GameObject[] _planets;
         private float _screenHeight;
         private float _screenWidth;
-        private float _offset;
 
-        private IScreenAdjustable _screenAdjustable;
+        private GameObject[] _sky;
+        private GameObject[] _stars;
 
         private void Awake()
         {
-            _screenAdjustable = AllServices.Container.Single<IScreenAdjustable>();
-            _backgroundsHeight = _screenAdjustable.BackgroundsHeight;
-            _offset = _screenAdjustable.VerticalOffset;
+            _backgroundAdjuster = AllServices.Container.Single<IBackgroundAdjuster>();
+            _backgroundsHeight = _backgroundAdjuster.BackgroundsHeight;
+            _offset = _backgroundAdjuster.VerticalOffset;
         }
 
         private void Start()
@@ -40,6 +39,7 @@ namespace Background
             CreateBackgroundObjects();
             InstantiateAndArrangeBackgrounds();
         }
+
         private void InstantiateAndArrangeBackgrounds()
         {
             for (int i = 0; i < layerPrefabs.Length; i++)
@@ -48,6 +48,7 @@ namespace Background
                 GetBackgroundsToStartPosition(_layerByIndex[i]);
             }
         }
+
         private void CreateBackgroundObjects()
         {
             _sky = new GameObject[backgroundsInLayer];
@@ -55,7 +56,7 @@ namespace Background
             _meteors = new GameObject[backgroundsInLayer];
             _planets = new GameObject[backgroundsInLayer];
 
-            _layerByIndex = new Dictionary<int, GameObject[]>()
+            _layerByIndex = new Dictionary<int, GameObject[]>
             {
                 { 0, _sky },
                 { 1, _stars },

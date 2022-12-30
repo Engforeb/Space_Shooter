@@ -13,6 +13,7 @@ namespace Enemy
         {
             tweens.GetTweens();
         }
+
         private void OnEnable()
         {
             Spawner.OnAllInPlace += StartTweens;

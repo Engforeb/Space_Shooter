@@ -5,9 +5,10 @@ namespace Ammo
 {
     public class BulletPool : IPool
     {
-        private readonly IGameFactory _gameFactory;
+        private readonly List<GameObject> _ammoBatch = new();
         private readonly BulletContainer _bulletContainer;
         private readonly int _capacity;
+        private readonly IGameFactory _gameFactory;
 
         public BulletPool(IGameFactory gameFactory, BulletContainer bulletContainer)
         {
@@ -16,8 +17,6 @@ namespace Ammo
             _capacity = _bulletContainer.Capacity;
             Generate();
         }
-
-        private readonly List<GameObject> _ammoBatch = new ();
 
         public void Generate()
         {
@@ -40,10 +39,11 @@ namespace Ammo
                         return ammo;
                     }
                 }
-            
+
             }
             return Add();
         }
+
         public GameObject Add()
         {
             GameObject ammo = _gameFactory.CreateBullet();

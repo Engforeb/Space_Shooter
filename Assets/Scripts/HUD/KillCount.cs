@@ -5,8 +5,8 @@ namespace HUD
 {
     public class KillCount : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI killCounterField;
         private int _killCounter;
-        [SerializeField] TextMeshProUGUI killCounterField;
 
         private void OnEnable()
         {
@@ -15,15 +15,15 @@ namespace HUD
             EnemyShipBehavior.OnDestroy += Counter;
         }
 
+        private void OnDisable()
+        {
+            EnemyShipBehavior.OnDestroy -= Counter;
+        }
+
         private void Counter()
         {
             _killCounter++;
             killCounterField.text = _killCounter.ToString();
-        }
-
-        private void OnDisable()
-        {
-            EnemyShipBehavior.OnDestroy -= Counter;
         }
     }
 }

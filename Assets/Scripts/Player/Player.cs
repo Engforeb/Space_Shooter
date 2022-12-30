@@ -2,45 +2,21 @@
 using Interfaces;
 using MyScreen;
 using UnityEngine;
-
 namespace Player
 {
     public class Player : MonoBehaviour, IDamageable, IGetSizeable, IAnimatable
     {
-        public float Width { get; private set; }
-        public float Height { get; private set; }
-        public int Health => health;
-        public Animator Animator { get; private set; }
-        
         public static Action OnDamage;
-        
+
         [SerializeField] private GameObject megaExplosion;
         [SerializeField] private int health;
         [SerializeField] private SpriteRenderer spriteRenderer;
+        private CameraShake _cameraShake;
 
         private bool _explosionStarted;
-        private CameraShake _cameraShake;
         private IMovable _movable;
         private IShootable[] _shootables;
-
-        public void Init(CameraShake cameraShake)
-        {
-            Width = transform.GetComponent<SpriteRenderer>().bounds.size.x;
-            Height = transform.GetComponent<SpriteRenderer>().bounds.size.y;
-            Animator = GetComponent<Animator>();
-
-            GetComponent<IMovable>().Init();
-            
-            _shootables = GetComponents<IShootable>();
-            
-            foreach (var shootable in _shootables)
-            {
-                shootable.Init();
-            }
-
-            _explosionStarted = false;
-            _cameraShake = cameraShake;
-        }
+        public int Health => health;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -56,17 +32,41 @@ namespace Player
                         Instantiate(megaExplosion, transform.position, Quaternion.identity);
                         SoundManager.Instance.PlayerExplosion();
                         spriteRenderer.enabled = false;
-                        Destroy(this.gameObject, 2f);
+                        Destroy(gameObject, 2f);
                     }
-                }   
+                }
             }
         }
+
+        public Animator Animator { get; private set; }
 
         public void Damage(int amount)
         {
             health -= amount;
             StartCoroutine(_cameraShake.Shake(0.2f, 0.05f));
             OnDamage?.Invoke();
+        }
+
+        public float Width { get; private set; }
+        public float Height { get; private set; }
+
+        public void Init(CameraShake cameraShake)
+        {
+            Width = transform.GetComponent<SpriteRenderer>().bounds.size.x;
+            Height = transform.GetComponent<SpriteRenderer>().bounds.size.y;
+            Animator = GetComponent<Animator>();
+
+            GetComponent<IMovable>().Init();
+
+            _shootables = GetComponents<IShootable>();
+
+            foreach (IShootable shootable in _shootables)
+            {
+                shootable.Init();
+            }
+
+            _explosionStarted = false;
+            _cameraShake = cameraShake;
         }
     }
 }

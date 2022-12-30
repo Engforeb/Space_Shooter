@@ -3,7 +3,6 @@ using Infrastructure.States;
 using Logic;
 using MyScreen;
 using UnityEngine;
-
 namespace Infrastructure
 {
     public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
@@ -13,13 +12,14 @@ namespace Infrastructure
         [SerializeField] private BulletContainer bulletParent;
 
         private Camera _camera;
-        
-        private Game _game;
         private CameraShake _cameraShake;
+
+        private Game _game;
+
         private void Awake()
         {
             _camera = Camera.main;
-            
+
             if (_camera != null)
             {
                 _cameraShake = _camera.GetComponent<CameraShake>();
@@ -27,9 +27,8 @@ namespace Infrastructure
                 _game = new Game(this, curtain, _camera, spriteRenderer, bulletParent, _cameraShake);
             }
             _game.StateMachine.Enter<BootstrapState>();
-            
+
             DontDestroyOnLoad(this);
         }
     }
-
 }

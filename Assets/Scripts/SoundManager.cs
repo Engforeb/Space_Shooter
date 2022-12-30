@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
-
 public class SoundManager : MonoBehaviour
 {
-    private static SoundManager _instance;
-    public static SoundManager Instance => _instance;
-    private void Awake() => _instance = this;
-
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip playerHit;
     [SerializeField] private AudioClip smallExplosion;
     [SerializeField] private AudioClip playerExplosion;
+    public static SoundManager Instance
+    {
+        get;
+        private set;
+    }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void HitSound()
     {

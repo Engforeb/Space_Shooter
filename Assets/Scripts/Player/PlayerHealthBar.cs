@@ -3,11 +3,11 @@ namespace Player
 {
     public class PlayerHealthBar : MonoBehaviour
     {
+        public static bool ShouldUpdateHealth;
         [SerializeField] private GameObject healthUnit;
         [SerializeField] private float distanceBetweenUnits;
 
         private Player _player;
-        public static bool ShouldUpdateHealth;
 
 
         private void OnEnable()
@@ -34,7 +34,7 @@ namespace Player
 
             for (int i = 0; i < _player.Health; i++)
             {
-                GameObject thisHealthUnit = Instantiate(this.healthUnit, transform, false);
+                GameObject thisHealthUnit = Instantiate(healthUnit, transform, false);
                 thisHealthUnit.transform.localPosition = new Vector2(initialXPosition, 0);
                 initialXPosition += distanceBetweenUnits;
             }

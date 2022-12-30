@@ -18,19 +18,20 @@ namespace HUD
             level.text = SceneManager.GetActiveScene().name;
         }
 
+        private void OnDisable()
+        {
+            _spawnManager.WaveChanged -= ChangeWaveNumber;
+        }
+
         public void Init(SpawnManager spawnManager, string sceneName)
         {
             spawnManager.WaveChanged += ChangeWaveNumber;
             level.text = sceneName;
         }
+
         private void ChangeWaveNumber(int waveNumber)
         {
             wave.text = "Wave " + waveNumber;
-        }
-
-        private void OnDisable()
-        {
-            _spawnManager.WaveChanged -= ChangeWaveNumber;
         }
     }
 }

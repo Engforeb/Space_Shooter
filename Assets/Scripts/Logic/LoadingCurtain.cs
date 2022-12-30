@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-
 namespace Logic
 {
     public class LoadingCurtain : MonoBehaviour
@@ -20,9 +19,11 @@ namespace Logic
             curtain.alpha = 1;
         }
 
-        public void Hide() => 
+        public void Hide()
+        {
             StartCoroutine(FadeIn());
-        
+        }
+
         private IEnumerator FadeIn()
         {
             while (curtain.alpha > 0)
@@ -30,7 +31,7 @@ namespace Logic
                 curtain.alpha -= 0.03f;
                 yield return _wait;
             }
-            
+
             gameObject.SetActive(false);
         }
     }

@@ -4,11 +4,13 @@
     {
         public GameLoopState(GameStateMachine stateMachine)
         {
-            
+
         }
+
         public void Enter()
         {
         }
+
         public void Exit()
         {
         }

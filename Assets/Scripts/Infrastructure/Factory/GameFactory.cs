@@ -5,14 +5,10 @@ using Infrastructure.AssetManagement;
 using Infrastructure.Services.PersistentProgress;
 using MyScreen;
 using UnityEngine;
-
 namespace Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
-        public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
-
         private readonly IAssets _assets;
         private readonly CameraShake _cameraShake;
 
@@ -21,7 +17,10 @@ namespace Infrastructure.Factory
             _cameraShake = cameraShake;
             _assets = assets;
         }
-        
+
+        public List<ISavedProgressReader> ProgressReaders { get; } = new();
+        public List<ISavedProgress> ProgressWriters { get; } = new();
+
         public GameObject CreatePlayer()
         {
             GameObject playerGo = _assets.Instantiate(AssetPaths.PlayerPath);
@@ -65,14 +64,16 @@ namespace Infrastructure.Factory
                 ProgressWriters.Add(progressWriter);
             }
 
-            ProgressReaders.Add(progressReader);    
+            ProgressReaders.Add(progressReader);
         }
+
         private SpawnManager InstantiateRegistered(string prefabPath)
         {
             SpawnManager spawnManager = _assets.Instantiate(prefabPath).GetComponent<SpawnManager>();
             RegisterProgressWatchers(spawnManager);
             return spawnManager;
         }
+
         private void RegisterProgressWatchers(SpawnManager spawnManager)
         {
             foreach (ISavedProgressReader progressReader in spawnManager.GetComponentsInChildren<ISavedProgressReader>())
@@ -81,5 +82,4 @@ namespace Infrastructure.Factory
             }
         }
     }
-
 }
