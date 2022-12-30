@@ -1,5 +1,5 @@
 ﻿using Ammo;
-using Background.Infrastructure.States;
+using Background;
 using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Services;
@@ -50,7 +50,7 @@ namespace Infrastructure.States
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _cameraShake));
             _services.RegisterSingle<ISavedLoadService>(new SavedLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
             _services.RegisterSingle<IPool>(new BulletPool(_services.Single<IGameFactory>(), _bulletContainer));
-            _services.RegisterSingle<CurrentScreen>(new CurrentScreen(_camera));
+            _services.RegisterSingle(new CurrentScreen(_camera));
             _services.RegisterSingle<IInput>(new MouseInput());
         }
         public void Exit()

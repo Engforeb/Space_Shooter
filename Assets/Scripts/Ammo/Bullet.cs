@@ -14,7 +14,6 @@ namespace Ammo
         [SerializeField] private float lifetime;
         [SerializeField] private int damage;
         [SerializeField] private GameObject explosion;
-        [SerializeField] private SpriteRenderer spriteRenderer;
 
         private bool _targetHit;
 
@@ -38,7 +37,7 @@ namespace Ammo
 
         public void Move()
         {
-            var transform1 = transform;
+            Transform transform1 = transform;
             transform1.position += transform1.up * (Time.deltaTime * bulletSpeed);
         }
 
@@ -50,7 +49,7 @@ namespace Ammo
             if (obj != null)
             {
                 obj.Damage(damage);
-                var position = transform.position;
+                Vector3 position = transform.position;
                 position = collision.ClosestPoint(position);
                 transform.position = position;
 

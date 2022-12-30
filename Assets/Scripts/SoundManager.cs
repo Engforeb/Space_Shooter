@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
@@ -8,26 +6,26 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance => _instance;
     private void Awake() => _instance = this;
 
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _playerHit;
-    [SerializeField] private AudioClip _smallExplosion;
-    [SerializeField] private AudioClip _playerExplosion;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip playerHit;
+    [SerializeField] private AudioClip smallExplosion;
+    [SerializeField] private AudioClip playerExplosion;
 
     public void HitSound()
     {
-        _audioSource.clip = _playerHit;
-        _audioSource.Play();
+        audioSource.clip = playerHit;
+        audioSource.Play();
     }
 
     public void SmallExplosion()
     {
-        _audioSource.clip = _smallExplosion;
-        _audioSource.Play();
+        audioSource.clip = smallExplosion;
+        audioSource.Play();
     }
 
     public void PlayerExplosion()
     {
-        _audioSource.clip = _playerExplosion;
-        _audioSource.Play();
+        audioSource.clip = playerExplosion;
+        audioSource.Play();
     }
 }

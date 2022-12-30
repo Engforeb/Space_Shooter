@@ -1,14 +1,13 @@
 ﻿using Infrastructure.Services;
 using InputClasses;
 using Interfaces;
+using MyScreen;
 using UnityEngine;
 
 namespace Player
 {
     public class Mover : MonoBehaviour, IMovable
     {
-        [SerializeField] private float keyboardInputSpeed;
-
         private Vector3 _offsetDistance;
         private IGetSizeable _screenBounds;
         private IGetSizeable _gameObjectSize;
@@ -35,8 +34,8 @@ namespace Player
             _gameObjectSize = GetComponent<IGetSizeable>();
             _animator = GetComponent<IAnimatable>();
 
-            var currentScreen = AllServices.Container.Single<CurrentScreen>();
-            var borders = currentScreen.BoundsForObject(_gameObjectSize);
+            CurrentScreen currentScreen = AllServices.Container.Single<CurrentScreen>();
+            ScreenBounds borders = currentScreen.BoundsForObject(_gameObjectSize);
             
             _leftBorder = borders.Left;
             _rightBorder = borders.Right;

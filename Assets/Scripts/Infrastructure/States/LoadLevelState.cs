@@ -43,13 +43,15 @@ namespace Infrastructure.States
         private void InitGameWorld()
         {
             _gameFactory.CreatePlayer();
-            var spawnManager = _gameFactory.CreateSpawnManager();
+            SpawnManager spawnManager = _gameFactory.CreateSpawnManager();
             _gameFactory.CreateHud(spawnManager, _sceneName);
         }
         private void InformProgressReaders()
         {
-            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders) 
+            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
+            {
                 progressReader.LoadProgress(_progressService.Progress);
+            }
         }
     }
 }

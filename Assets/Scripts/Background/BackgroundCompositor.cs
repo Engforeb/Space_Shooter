@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Background.Infrastructure.States;
 using Infrastructure.Services;
 using UnityEngine;
 
@@ -17,7 +16,6 @@ namespace Background
         private GameObject[] _planets;
 
         private Dictionary<int, GameObject[]> _layerByIndex;
-        private Camera _camera;
         private float _backgroundsHeight;
         private float _screenHeight;
         private float _screenWidth;
@@ -27,7 +25,6 @@ namespace Background
 
         private void Awake()
         {
-            _camera = Camera.main;
             _screenAdjustable = AllServices.Container.Single<IScreenAdjustable>();
             _backgroundsHeight = _screenAdjustable.BackgroundsHeight;
             _offset = _screenAdjustable.VerticalOffset;
@@ -67,21 +64,6 @@ namespace Background
             };
         }
 
-        // private (float BackgroundsHeight, float Offset) ScreenAdjustmentData()
-        // {
-        //     _screenHeight = _camera.orthographicSize * 2;
-        //     _screenWidth = _screenHeight / Screen.height * Screen.width;
-        //
-        //     SpriteRenderer spriteRenderer = layerPrefabs[0].GetComponent<SpriteRenderer>();
-        //     Sprite sprite = spriteRenderer.sprite;
-        //     
-        //     ResizeFactor = _screenWidth / sprite.bounds.size.x;
-        //     var backgroundsHeight = spriteRenderer.bounds.size.y * ResizeFactor;
-        //     var offset = (_screenHeight - backgroundsHeight) * 0.5f;
-        //
-        //     return (backgroundsHeight, offset);
-        // }
-
         private void InitiateBackgrounds(GameObject prefabLayers, GameObject layersToPass, GameObject[] backgrounds)
         {
             for (int i = 0; i < backgroundsInLayer; i++)
@@ -97,9 +79,13 @@ namespace Background
             for (int i = 0; i < backgrounds.Length; i++)
             {
                 if (i == 0)
+                {
                     backgrounds[i].transform.position = new Vector2(0, -_offset);
+                }
                 else
+                {
                     backgrounds[i].transform.position = new Vector2(0, backgrounds[i - 1].transform.position.y + _backgroundsHeight);
+                }
             }
         }
     }

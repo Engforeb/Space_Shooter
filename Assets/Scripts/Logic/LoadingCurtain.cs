@@ -6,11 +6,11 @@ namespace Logic
     public class LoadingCurtain : MonoBehaviour
     {
         public CanvasGroup curtain;
-        private WaitForSeconds wait;
+        private WaitForSeconds _wait;
 
         private void Awake()
         {
-            wait = new WaitForSeconds(0.03f);
+            _wait = new WaitForSeconds(0.03f);
             DontDestroyOnLoad(this);
         }
 
@@ -28,7 +28,7 @@ namespace Logic
             while (curtain.alpha > 0)
             {
                 curtain.alpha -= 0.03f;
-                yield return wait;
+                yield return _wait;
             }
             
             gameObject.SetActive(false);

@@ -22,8 +22,8 @@ namespace Infrastructure.Factory
         
         public GameObject CreatePlayer()
         {
-            var playerGo = _assets.Instantiate(AssetPaths.PlayerPath);
-            var player = playerGo.GetComponent<Player.Player>();
+            GameObject playerGo = _assets.Instantiate(AssetPaths.PlayerPath);
+            Player.Player player = playerGo.GetComponent<Player.Player>();
             player.Init(_cameraShake);
             return player.gameObject;
         }
@@ -45,8 +45,8 @@ namespace Infrastructure.Factory
 
         public void CreateHud(SpawnManager spawnManager, string sceneName)
         {
-            var hudGO = _assets.Instantiate(AssetPaths.HudPath);
-            var hud = hudGO.GetComponent<HudData>();
+            GameObject hudGo = _assets.Instantiate(AssetPaths.HudPath);
+            HudData hud = hudGo.GetComponent<HudData>();
             hud.Init(spawnManager, sceneName);
         }
 
@@ -58,8 +58,10 @@ namespace Infrastructure.Factory
 
         private void Register(ISavedProgressReader progressReader)
         {
-            if (progressReader is ISavedProgress progressWriter) 
+            if (progressReader is ISavedProgress progressWriter)
+            {
                 ProgressWriters.Add(progressWriter);
+            }
 
             ProgressReaders.Add(progressReader);    
         }
@@ -72,7 +74,9 @@ namespace Infrastructure.Factory
         private void RegisterProgressWatchers(SpawnManager spawnManager)
         {
             foreach (ISavedProgressReader progressReader in spawnManager.GetComponentsInChildren<ISavedProgressReader>())
+            {
                 Register(progressReader);
+            }
         }
     }
 

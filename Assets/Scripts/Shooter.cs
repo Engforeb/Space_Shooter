@@ -58,7 +58,7 @@ public class Shooter : MonoBehaviour, IShootable
 
             GameObject bullet = _pool.Request();
 
-            var myTransform = socket.transform;
+            Transform myTransform = socket.transform;
             
             bullet.transform.position = myTransform.position;
             bullet.transform.rotation = myTransform.rotation;

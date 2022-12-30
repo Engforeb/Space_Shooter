@@ -1,4 +1,5 @@
 ﻿using System;
+using Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,9 +41,13 @@ namespace Enemy
         public void Damage(int damageAmount)
         {
             if (currentHealth >= 1)
+            {
                 currentHealth -= damageAmount;
-            else if (currentHealth < 0) 
+            }
+            else if (currentHealth < 0)
+            {
                 currentHealth = 0;
+            }
 
             _healthSlider.value = currentHealth / _startHealth;
 
@@ -64,7 +69,10 @@ namespace Enemy
                 }
             }
 
-            if (currentHealth != 0 || _dead) return;
+            if (currentHealth != 0 || _dead)
+            {
+                return;
+            }
             GameObject explosion = Instantiate(shipExplosion);
             explosion.transform.position = transform.position;
             Destroy(explosion, 1f);

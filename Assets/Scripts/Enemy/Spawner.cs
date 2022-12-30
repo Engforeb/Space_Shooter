@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using Background;
-using Background.Infrastructure.States;
 using DG.Tweening;
 using Infrastructure.Services;
-using UnityEditor.Toolbars;
 using UnityEngine;
 
 namespace Enemy
@@ -23,8 +21,6 @@ namespace Enemy
         [SerializeField] private float timeToGetToPosition;
         [SerializeField] private GameObject positions;
         [SerializeField] private GameObject maneuvering;
-        
-        private BackgroundCompositor _backgroundCompositor;
 
         private int _killedShips;
         private WaitForSeconds _intervalBetweenShips;
@@ -38,15 +34,15 @@ namespace Enemy
         {
             _screenAdjuster = AllServices.Container.Single<IScreenAdjustable>();
             
-            _backgroundCompositor = FindObjectOfType<BackgroundCompositor>();
+            FindObjectOfType<BackgroundCompositor>();
             
-            var localScale = positions.transform.localScale;
+            Vector3 localScale = positions.transform.localScale;
             _initialScale = localScale;
             localScale *= _screenAdjuster.ResizeFactor;
             positions.transform.localScale = localScale;
 
-            var transform1 = transform;
-            var position = transform1.position;
+            Transform transform1 = transform;
+            Vector3 position = transform1.position;
             _initialPosition = position;
             position = new Vector3(0, position.y / _screenAdjuster.ResizeFactor, 0);
             transform1.position = position;

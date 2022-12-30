@@ -1,41 +1,43 @@
 ﻿using UnityEngine;
-
-public class PlayerHealthBar : MonoBehaviour
+namespace Player
 {
-    [SerializeField] private GameObject _healthUnit;
-    [SerializeField] private float _distanceBetweenUnits;
-
-    private Player.Player _player;
-    public static bool ShouldUpdateHealth;
-
-
-    private void OnEnable()
+    public class PlayerHealthBar : MonoBehaviour
     {
-        Player.Player.OnDamage += DrawHealthUnits;
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player.Player>();
-        DrawHealthUnits();
-    }
+        [SerializeField] private GameObject healthUnit;
+        [SerializeField] private float distanceBetweenUnits;
 
-    private void OnDisable()
-    {
-        Player.Player.OnDamage -= DrawHealthUnits;
-    }
+        private Player _player;
+        public static bool ShouldUpdateHealth;
 
-    private void DrawHealthUnits()
-    {
-        GameObject[] healthUnits = GameObject.FindGameObjectsWithTag("HealthUnit");
-        for (int i = 0; i < healthUnits.Length; i++)
+
+        private void OnEnable()
         {
-            Destroy(healthUnits[i].gameObject);
+            Player.OnDamage += DrawHealthUnits;
+            _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            DrawHealthUnits();
         }
 
-        float initialXPosition = 0;
-
-        for (int i = 0; i < _player.Health; i++)
+        private void OnDisable()
         {
-            GameObject healthUnit = Instantiate(_healthUnit, transform, false);
-            healthUnit.transform.localPosition = new Vector2(initialXPosition, 0);
-            initialXPosition += _distanceBetweenUnits;
+            Player.OnDamage -= DrawHealthUnits;
+        }
+
+        private void DrawHealthUnits()
+        {
+            GameObject[] healthUnits = GameObject.FindGameObjectsWithTag("HealthUnit");
+            for (int i = 0; i < healthUnits.Length; i++)
+            {
+                Destroy(healthUnits[i].gameObject);
+            }
+
+            float initialXPosition = 0;
+
+            for (int i = 0; i < _player.Health; i++)
+            {
+                GameObject thisHealthUnit = Instantiate(this.healthUnit, transform, false);
+                thisHealthUnit.transform.localPosition = new Vector2(initialXPosition, 0);
+                initialXPosition += distanceBetweenUnits;
+            }
         }
     }
 }

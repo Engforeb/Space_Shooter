@@ -1,5 +1,4 @@
-﻿using Background.Infrastructure.States;
-using Infrastructure.Services;
+﻿using Infrastructure.Services;
 using UnityEngine;
 
 namespace Background
@@ -7,7 +6,7 @@ namespace Background
     public class BackgroundMover : MonoBehaviour, IMoveUppable
     {
         [SerializeField] protected float backgroundSpeed = 0.5f;
-        
+
         private BackgroundCompositor _backgroundCompositor;
         private SpriteRenderer _spriteRenderer;
         private float _myHeight;
@@ -19,26 +18,29 @@ namespace Background
         public void Init()
         {
             _screenAdjuster = AllServices.Container.Single<IScreenAdjustable>();
-            
+
             _myHeight = _screenAdjuster.BackgroundsHeight;
             _offset = _screenAdjuster.VerticalOffset;
         }
-        
+
         protected void Update()
         {
             Move();
-            if (!(transform.position.y <= - (_myHeight + _offset))) return;
+            if (!(transform.position.y <= -(_myHeight + _offset)))
+            {
+                return;
+            }
             MoveUp();
         }
         public void MoveUp()
         {
-            var moveUpY = _myHeight * 2 - _offset - _gapCrutch;
+            float moveUpY = _myHeight * 2 - _offset - _gapCrutch;
             transform.position = new Vector2(0, moveUpY);
         }
         public void Move()
         {
-            Transform transform1 = transform;
-            transform1.position += -transform1.up * (Time.deltaTime * backgroundSpeed);
+            Transform myTransform = transform;
+            myTransform.position += -myTransform.up * (Time.deltaTime * backgroundSpeed);
         }
     }
 }

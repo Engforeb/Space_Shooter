@@ -1,4 +1,7 @@
-﻿public interface IDamageable
+﻿namespace Interfaces
 {
-    void Damage(int damageAmount);
+    public interface IDamageable
+    {
+        void Damage(int damageAmount);
+    }
 }

@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cd61770a2570949a47dc68780a5bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _killCounterField: {fileID: 4345260296596790133}
+  killCounterField: {fileID: 4345260296596790133}
 --- !u!1 &4345260296708954006
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931492f4ffd875b428cbadd0970184fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthUnit: {fileID: 6492345441568709300, guid: f05a336f3c7b0ca4d821c44549cc1781, type: 3}
-  _distanceBetweenUnits: 22.5
+  healthUnit: {fileID: 6492345441568709300, guid: f05a336f3c7b0ca4d821c44549cc1781, type: 3}
+  distanceBetweenUnits: 22.5
 --- !u!1 &4345260296903397037
 GameObject:
   m_ObjectHideFlags: 0

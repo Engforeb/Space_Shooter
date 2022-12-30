@@ -29,7 +29,7 @@ namespace Ammo
 
         public GameObject Request()
         {
-            foreach (var ammo in _ammoBatch)
+            foreach (GameObject ammo in _ammoBatch)
             {
                 if (ammo != null)
                 {

@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a591864819650164eb304ef3eaf9c509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 497415618}
-  _playerHit: {fileID: 8300000, guid: 99c305f5370173e4680a12f1a75689a4, type: 3}
-  _smallExplosion: {fileID: 8300000, guid: 13e9040d11d90a04bb7040841232a893, type: 3}
-  _playerExplosion: {fileID: 8300000, guid: 87d345e3baa1c684b8cf879c7ced9804, type: 3}
+  audioSource: {fileID: 497415618}
+  playerHit: {fileID: 8300000, guid: 99c305f5370173e4680a12f1a75689a4, type: 3}
+  smallExplosion: {fileID: 8300000, guid: 13e9040d11d90a04bb7040841232a893, type: 3}
+  playerExplosion: {fileID: 8300000, guid: 87d345e3baa1c684b8cf879c7ced9804, type: 3}
 --- !u!4 &497415617
 Transform:
   m_ObjectHideFlags: 0

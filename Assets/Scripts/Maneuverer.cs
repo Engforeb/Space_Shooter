@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using DG.Tweening;
 using Enemy;
 
 public class Maneuverer : MonoBehaviour
 {
-    [SerializeField] private DOTweenAnimation _tweens;
-    [SerializeField] private bool _move, _scale, _rotate;
-
-    List<Tween> _allTweens;
+    [SerializeField] private DOTweenAnimation tweens;
+    [SerializeField] private bool move;
+    [SerializeField] private bool scale;
+    [SerializeField] private bool rotate;
 
     private void Start()
     {
-        _allTweens = _tweens.GetTweens();
+        tweens.GetTweens();
     }
     private void OnEnable()
     {
@@ -29,19 +27,19 @@ public class Maneuverer : MonoBehaviour
 
     private void StartTweens()
     {
-        if (_move)
+        if (move)
         {
-            _tweens.DOPlayAllById("Move");
+            tweens.DOPlayAllById("Move");
         }
 
-        if (_scale)
+        if (scale)
         {
-            _tweens.DOPlayAllById("Scale");
+            tweens.DOPlayAllById("Scale");
         }
 
-        if (_rotate)
+        if (rotate)
         {
-            _tweens.DOPlayAllById("Rotate");
+            tweens.DOPlayAllById("Rotate");
         }
     }
 

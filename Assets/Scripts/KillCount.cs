@@ -1,26 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Enemy;
+﻿using Enemy;
 using TMPro;
 using UnityEngine;
 
 public class KillCount : MonoBehaviour
 {
     private int _killCounter;
-    [SerializeField] TextMeshProUGUI _killCounterField;
-
+    [SerializeField] TextMeshProUGUI killCounterField;
 
     private void OnEnable()
     {
-        _killCounterField = GetComponent<TextMeshProUGUI>();
-        _killCounterField.text = "0";
+        killCounterField = GetComponent<TextMeshProUGUI>();
+        killCounterField.text = "0";
         EnemyShipBehavior.OnDestroy += Counter;
     }
 
     private void Counter()
     {
         _killCounter++;
-        _killCounterField.text = _killCounter.ToString();
+        killCounterField.text = _killCounter.ToString();
     }
 
     private void OnDisable()

@@ -1,5 +1,5 @@
 using Infrastructure.Services;
-namespace Background.Infrastructure.States
+namespace Background
 {
     public interface IScreenAdjustable : IService
     {

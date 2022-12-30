@@ -1,6 +1,5 @@
-using Background.Infrastructure.States;
 using UnityEngine;
-namespace Infrastructure.States
+namespace Background
 {
     public class ScreenAdjustable : IScreenAdjustable
     {

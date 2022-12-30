@@ -5,7 +5,6 @@ using Enemy;
 using Infrastructure.Services;
 using Infrastructure.Services.PersistentProgress;
 using Infrastructure.Services.SaveLoad;
-using Logic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,7 +36,8 @@ public class SpawnManager : MonoBehaviour, ISavedProgress
                 WaveChanged?.Invoke(spawners[i].ID);
                 _wave = i;
                 _savedLoadService.SaveProgress();
-                yield return new WaitUntil(() => spawners[i].gameObject.activeSelf == false);
+                int i1 = i;
+                yield return new WaitUntil(() => spawners[i1].gameObject.activeSelf == false);
             }
         }
     }
@@ -46,7 +46,9 @@ public class SpawnManager : MonoBehaviour, ISavedProgress
     
     public void LoadProgress(PlayerProgress progress)
     {
-        if (SceneManager.GetActiveScene().name == progress.worldData.levelToLoad) 
+        if (SceneManager.GetActiveScene().name == progress.worldData.levelToLoad)
+        {
             _wave = progress.worldData.waveToLoad;
+        }
     }
 }
