@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Enemy;
 using Infrastructure.Services;
 using Infrastructure.Services.PersistentProgress;
 using UnityEngine;

@@ -1,4 +1,5 @@
-﻿using Infrastructure.Factory;
+﻿using Enemy;
+using Infrastructure.Factory;
 using Infrastructure.Services.PersistentProgress;
 using Logic;
 namespace Infrastructure.States

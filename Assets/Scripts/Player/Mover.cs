@@ -35,7 +35,7 @@ namespace Player
             _animator = GetComponent<IAnimatable>();
 
             CurrentScreen currentScreen = AllServices.Container.Single<CurrentScreen>();
-            ScreenBounds borders = currentScreen.BoundsForObject(_gameObjectSize);
+            ScreenBounds borders = currentScreen.GetBoundsForObject(_gameObjectSize);
             
             _leftBorder = borders.Left;
             _rightBorder = borders.Right;
