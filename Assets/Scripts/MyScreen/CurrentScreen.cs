@@ -5,20 +5,20 @@ namespace MyScreen
 {
     public class CurrentScreen : IGetSizeable, IService
     {
-        public float Width { get; }
-        public float Height { get;}
-
         public CurrentScreen(Camera myCamera)
         {
-            var camera = myCamera;
-            var screenBounds = camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, camera.transform.position.z));
+            Camera camera = myCamera;
+            Vector3 screenBounds = camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, camera.transform.position.z));
             Width = screenBounds.x;
             Height = screenBounds.y;
         }
-    
+
+        public float Width { get; }
+        public float Height { get; }
+
         public ScreenBounds GetBoundsForObject(IGetSizeable go)
         {
-            var bounds = new ScreenBounds
+            ScreenBounds bounds = new ScreenBounds
             {
                 Left = -Width + go.Width / 2,
                 Right = Width - go.Width / 2,

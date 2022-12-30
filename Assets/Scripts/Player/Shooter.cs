@@ -14,12 +14,18 @@ namespace Player
 
         [Range(0, 1)] [SerializeField] private float fireRate;
 
-        private WaitForSeconds _fireRateYield;
-
         private IAmmo _ammo;
-        private IPool _pool;
+
+        private WaitForSeconds _fireRateYield;
         private IInput _iInput;
+        private IPool _pool;
         private bool _shootStarted;
+
+        private void Update()
+        {
+            _iInput.UserInput();
+            Shoot();
+        }
 
         public void Init()
         {
@@ -42,16 +48,10 @@ namespace Player
             }
         }
 
-        private void Update()
-        {
-            _iInput.UserInput();
-            Shoot();
-        }
-
         private IEnumerator ContinuousShoot()
         {
             _shootStarted = true;
-        
+
             while (true)
             {
                 muzzleFlashParticles.Play();
@@ -60,7 +60,7 @@ namespace Player
                 GameObject bullet = _pool.Request();
 
                 Transform myTransform = socket.transform;
-            
+
                 bullet.transform.position = myTransform.position;
                 bullet.transform.rotation = myTransform.rotation;
 

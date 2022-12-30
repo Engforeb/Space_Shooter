@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
-
 namespace MyScreen
 {
     public class CameraShake : MonoBehaviour

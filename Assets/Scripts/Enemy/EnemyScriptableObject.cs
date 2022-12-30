@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 namespace Enemy
 {
     [CreateAssetMenu(fileName = "New Ship", menuName = "Enemy Ship")]

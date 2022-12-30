@@ -5,11 +5,6 @@ namespace Ammo
 {
     public class Bullet : MonoBehaviour, IAmmo
     {
-        public GameObject Body => gameObject;
-        public float Speed => bulletSpeed;
-        public float Lifetime => lifetime;
-        public int Damage => damage;
-    
         [SerializeField] private float bulletSpeed;
         [SerializeField] private float lifetime;
         [SerializeField] private int damage;
@@ -21,11 +16,6 @@ namespace Ammo
         {
             _targetHit = false;
         }
-        private void OnEnable()
-        {  
-            transform.parent = null;
-            _targetHit = false;
-        }
 
         private void Update()
         {
@@ -35,10 +25,15 @@ namespace Ammo
             }
         }
 
-        public void Move()
+        private void OnEnable()
         {
-            Transform transform1 = transform;
-            transform1.position += transform1.up * (Time.deltaTime * bulletSpeed);
+            transform.parent = null;
+            _targetHit = false;
+        }
+
+        private void OnBecameInvisible()
+        {
+            gameObject.SetActive(false);
         }
 
         private async void OnTriggerEnter2D(Collider2D collision)
@@ -56,16 +51,22 @@ namespace Ammo
                 explosion.SetActive(true);
                 explosion.transform.position = position;
                 explosion.GetComponent<ParticleSystem>().Play();
-            
+
                 await Task.Delay(100);
 
                 gameObject.SetActive(false);
             }
         }
 
-        private void OnBecameInvisible()
+        public GameObject Body => gameObject;
+        public float Speed => bulletSpeed;
+        public float Lifetime => lifetime;
+        public int Damage => damage;
+
+        public void Move()
         {
-            gameObject.SetActive(false);
+            Transform transform1 = transform;
+            transform1.position += transform1.up * (Time.deltaTime * bulletSpeed);
         }
     }
 }

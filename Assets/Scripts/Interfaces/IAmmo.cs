@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 namespace Interfaces
 {
     public interface IAmmo
@@ -8,6 +7,7 @@ namespace Interfaces
         float Speed { get; }
         float Lifetime { get; }
         int Damage { get; }
+
         void Move();
     }
 }

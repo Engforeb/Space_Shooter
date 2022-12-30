@@ -4,6 +4,7 @@
     {
         float FireRate { get; }
         IMagazine Magazine { get; }
+
         void Shoot();
     }
 }

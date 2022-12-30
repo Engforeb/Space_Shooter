@@ -7,12 +7,16 @@ namespace Infrastructure
     public class SceneLoader
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        
-        public SceneLoader(ICoroutineRunner coroutineRunner) => 
-            _coroutineRunner = coroutineRunner;
 
-        public void Load(string name, Action onLoaded = null) => 
+        public SceneLoader(ICoroutineRunner coroutineRunner)
+        {
+            _coroutineRunner = coroutineRunner;
+        }
+
+        public void Load(string name, Action onLoaded = null)
+        {
             _coroutineRunner.StartCoroutine(LoadScene(name, onLoaded));
+        }
 
         private IEnumerator LoadScene(string nextScene, Action onLoaded = null)
         {
@@ -21,12 +25,14 @@ namespace Infrastructure
                 onLoaded?.Invoke();
                 yield break;
             }
-            
+
             AsyncOperation waitForNextScene = SceneManager.LoadSceneAsync(nextScene);
 
             while (!waitForNextScene.isDone)
+            {
                 yield return null;
-            
+            }
+
             onLoaded?.Invoke();
         }
     }

@@ -4,17 +4,14 @@ using Background;
 using DG.Tweening;
 using Infrastructure.Services;
 using UnityEngine;
-
 namespace Enemy
 {
     public class Spawner : MonoBehaviour
     {
-        public int ID => id;
-        public static Action OnAllInPlace { get; set; }
         public static Action OnAllShipsKilled;
 
         [SerializeField] private int id;
-        [SerializeField] GameObject shipPrefab;
+        [SerializeField] private GameObject shipPrefab;
         [SerializeField] private float seconds;
         [SerializeField] private Transform[] positionGrid;
         [SerializeField] private Transform gridStartPosition;
@@ -22,33 +19,40 @@ namespace Enemy
         [SerializeField] private GameObject positions;
         [SerializeField] private GameObject maneuvering;
 
-        private int _killedShips;
-        private WaitForSeconds _intervalBetweenShips;
-
-        private Vector3 _initialScale;
+        private IBackgroundAdjuster _adjuster;
         private Vector3 _initialPosition;
 
-        private IScreenAdjustable _screenAdjuster;
+        private Vector3 _initialScale;
+        private WaitForSeconds _intervalBetweenShips;
+
+        private int _killedShips;
+        public int ID => id;
+        public static Action OnAllInPlace { get; set; }
+
+        private void Start()
+        {
+            _intervalBetweenShips = new WaitForSeconds(seconds);
+        }
 
         private void OnEnable()
         {
-            _screenAdjuster = AllServices.Container.Single<IScreenAdjustable>();
-            
+            _adjuster = AllServices.Container.Single<IBackgroundAdjuster>();
+
             FindObjectOfType<BackgroundCompositor>();
-            
+
             Vector3 localScale = positions.transform.localScale;
             _initialScale = localScale;
-            localScale *= _screenAdjuster.ResizeFactor;
+            localScale *= _adjuster.ResizeFactor;
             positions.transform.localScale = localScale;
 
             Transform transform1 = transform;
             Vector3 position = transform1.position;
             _initialPosition = position;
-            position = new Vector3(0, position.y / _screenAdjuster.ResizeFactor, 0);
+            position = new Vector3(0, position.y / _adjuster.ResizeFactor, 0);
             transform1.position = position;
 
             StartCoroutine(GetShipsInPlace(shipPrefab));
-            
+
             EnemyShipBehavior.OnDestroy += KilledShipsCounter;
         }
 
@@ -59,16 +63,13 @@ namespace Enemy
             transform.position = _initialPosition;
         }
 
-        private void Start() => 
-            _intervalBetweenShips = new WaitForSeconds(seconds);
-
         private IEnumerator GetShipsInPlace(GameObject shipPfb)
         {
             for (int i = 0; i < positionGrid.Length; i++)
             {
                 GameObject ship = Instantiate(shipPfb, gridStartPosition.position, Quaternion.Euler(0, 0, 180));
                 ship.transform.SetParent(maneuvering.transform, true);
-            
+
                 if (i != positionGrid.Length - 1)
                 {
                     ship.transform.DOMove(positionGrid[i].position, timeToGetToPosition);
@@ -82,8 +83,10 @@ namespace Enemy
             }
         }
 
-        private void AllInPosition() => 
+        private void AllInPosition()
+        {
             OnAllInPlace?.Invoke();
+        }
 
         private void KilledShipsCounter()
         {
@@ -92,7 +95,7 @@ namespace Enemy
             {
                 OnAllShipsKilled?.Invoke();
                 gameObject.SetActive(false);
-            }   
+            }
         }
     }
 }
